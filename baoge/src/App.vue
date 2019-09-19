@@ -16,6 +16,8 @@
           class="el-menu-vertical-demo"
           background-color="#545c64"
           text-color="#fff"
+          :router="true"
+          :default-active="defaultActive"
           active-text-color="#ffd04b"
         >
           <el-submenu index="1">
@@ -24,10 +26,10 @@
               <span>账户管理</span>
             </template>
             <el-menu-item-group>
-              <el-menu-item index="/studentinfo">学生信息管理</el-menu-item>
+              <el-menu-item index="/">学生信息管理</el-menu-item>
             </el-menu-item-group>
             <el-menu-item-group>
-              <el-menu-item index="/teacherinfo">老师信息管理</el-menu-item>
+              <el-menu-item index="/teacherContorl">老师信息管理</el-menu-item>
             </el-menu-item-group>
           </el-submenu>
           <el-submenu index="2">
@@ -36,7 +38,10 @@
               <span>统计信息</span>
             </template>
             <el-menu-item-group>
-              <el-menu-item index="/studentinfo">信息列表</el-menu-item>
+              <el-menu-item index="/studentstatistics">学生信息</el-menu-item>
+            </el-menu-item-group>
+            <el-menu-item-group>
+              <el-menu-item index="/teacherstatistics">老师信息</el-menu-item>
             </el-menu-item-group>
           </el-submenu>
           <el-submenu index="3">
@@ -48,7 +53,7 @@
               <el-menu-item index="/studentinfo">报警列表</el-menu-item>
             </el-menu-item-group>
           </el-submenu>
-          <el-menu-item index="2">
+          <el-menu-item index="/paytable">
             <i class="el-icon-s-platform"></i>
             <span slot="title">充值设置</span>
           </el-menu-item>
@@ -66,9 +71,15 @@
 <script>
 export default {
   data() {
-    return {};
+    return {
+      defaultActive: ""
+    };
   },
   created() {},
+  mounted() {
+    console.log(this.$route.path);
+    this.defaultActive = "/";
+  },
   watch: {},
   methods: {}
 };
@@ -117,5 +128,13 @@ body,
   height: 100%;
   width: 100%;
   min-height: 400px;
+}
+.mainCont {
+  background: #fff;
+  padding: 3% 6%;
+  padding-bottom: 5%;
+}
+.el-scrollbar__wrap {
+  overflow-x: hidden;
 }
 </style>
