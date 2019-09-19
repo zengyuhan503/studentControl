@@ -98,11 +98,11 @@ export default {
     return {
       num: 1,
       imageUrl: "",
-      input:"",
+      input: "",
       editDialogVisible: false,
       form: {
         formInline: "",
-        text:""
+        text: ""
       },
       tableData: [
         {
