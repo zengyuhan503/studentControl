@@ -1,4 +1,4 @@
-'use strict'
+
 // Template version: 1.3.1
 // see http://vuejs-templates.github.io/webpack for documentation.
 
@@ -10,11 +10,26 @@ module.exports = {
     // Paths
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
-    proxyTable: {},
+    proxyTable: {
+      '/account': {
+        target: 'http://www.small-spark.com',
+        changeOrigin: true,
+        pathRewrite: {
+          '^/account': '/account',
+        }
+      },
+      '/find': {
+        target: 'http://www.small-spark.com',
+        changeOrigin: true,
+        pathRewrite: {
+          '^/find': '/find',
+        }
+      },
+    },
 
     // Various Dev Server settings
-    host: 'localhost', // can be overwritten by process.env.HOST
-    port: 8080, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
+    host: '127.0.0.1', // can be overwritten by process.env.HOST
+    port: 8088, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
     autoOpenBrowser: false,
     errorOverlay: true,
     notifyOnErrors: true,

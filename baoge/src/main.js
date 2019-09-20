@@ -30,43 +30,43 @@ axios.interceptors.response.use(
     var statusCode = err.response.status;
     switch (statusCode) {
       case 400:
-        element.Message.error('请求错误');
+        ElementUI.Message.error('请求错误');
         break;
       case 401:
-        element.Message.error('未授权，请登录');
+        ElementUI.Message.error('未授权，请登录');
         router.push('/login');
         break;
       case 403:
-        element.Message.error('拒绝访问');
+        ElementUI.Message.error('拒绝访问');
         break;
 
       case 404:
-        element.Message.error(`请求地址出错，请重试`);
+        ElementUI.Message.error(`请求地址出错，请重试`);
         break;
 
       case 408:
-        element.Message.error('请求超时');
+        ElementUI.Message.error('请求超时');
         break;
 
       case 500:
-        element.Message.error('服务器内部错误');
+        ElementUI.Message.error('服务器内部错误');
         break;
 
       case 501:
-        element.Message.error('服务未实现');
+        ElementUI.Message.error('服务未实现');
         break;
 
       case 502:
-        element.Message.error('网关错误');
+        ElementUI.Message.error('网关错误');
         router.push('/login');
         break;
 
       case 503:
-        element.Message.error('服务不可用');
+        ElementUI.Message.error('服务不可用');
         break;
 
       case 504:
-        element.Message.error('网关超时,');
+        ElementUI.Message.error('网关超时,');
         break;
 
       case 505:

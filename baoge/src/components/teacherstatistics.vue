@@ -1,24 +1,27 @@
 <template lang="">
-    <div>
-       <div class="setGetAppPoolList">
-            <el-row :gutter="0" class="formCont">
-              <el-col :span="4" :push="0">
-                <h3>老师统计表：</h3>
-              </el-col>
-            </el-row>
-          </div>
-        <div class="setGetAppPoolList">
-             <el-col>
+  <div>
+    <div class="setGetAppPoolList">
+        <el-row :gutter="0" class="formCont">
+          <el-col :span="4" :push="0">
+            <h3>老师统计：</h3>
+          </el-col>
+        </el-row>
+    </div>
+    <div class="setGetAppPoolList">
+      <el-col>
         <el-form ref="form" :model="form" class="filtrate" label-width="80px">
           <el-row :gutter="10">
-           
-            <el-col :span="4">
-           
-              <el-date-picker
-               value-format="timestamp"
+            <el-col :span="8">
+               <el-date-picker
                 v-model="form.month"
-                type="month"
-                placeholder="选择月">
+                type="daterange"
+                align="right"
+                unlink-panels
+                range-separator="至"
+                start-placeholder="开始日期"
+                end-placeholder="结束日期"
+                 value-format="timestamp"
+                :picker-options="pickerOptions">
               </el-date-picker>
             </el-col>
             <el-col :span="8">
@@ -30,52 +33,36 @@
           </el-row>
         </el-form>
       </el-col>
-          </div>
-    <el-table  :data="tableData"   border style="width: 100%">
-    <el-table-column fixed  prop="date" label="姓名" > </el-table-column>
-    <el-table-column  prop="name"  label="年龄" > </el-table-column>
-    <el-table-column
-      prop="province"
-      label="班级"
-     >
+    </div>
+  <el-table  :data="tableData"    style="width: 100%">
+    <el-table-column fixed  prop="id" label="Id" > </el-table-column>
+    <el-table-column  prop="name"  label="姓名" > </el-table-column>
+    <el-table-column   label="开始时间" >
+            <template slot-scope="scope">
+                <div>
+                    {{format(scope.row.startTime)}}
+                </div>
+            </template>
+        </el-table-column>
+    <el-table-column   label="结束时间" >
+        <template slot-scope="scope">
+  <div>{{format(scope.row.endTime)}}</div>
+</template>
     </el-table-column>
     <el-table-column
-      prop="city"
-      label="创建时间"
-     >
-    </el-table-column>
-    <el-table-column
-      prop="address"
-      label="地址"
+      prop="student"
+      label="学生"
     >
     </el-table-column>
-    <el-table-column
-      prop="zip"
-      label="电话"
-    >
-    </el-table-column>
- 	</el-table-column>
   </el-table>
-  
   <el-dialog title="查看头像" :visible.sync="editDialogVisible" width="30rem">
-        <div style="width: 100%;height: 20rem;position: relative;">	
-			<el-upload
-				class="avatar-uploader"
-				action="https://jsonplaceholder.typicode.com/posts/"
-				:show-file-list="false"
-				:auto-upload="false"
-				:on-success="handleAvatarSuccess"
-				:on-change="beforeAvatarUpload">
-				<img v-if="imageUrl" :src="imageUrl" class="avatar">
-				<i v-else class="el-icon-plus avatar-uploader-icon"></i>
-			</el-upload>
-        </div>
-        <span slot="footer" class="dialog-footer">
-          <el-button @click="closeup">取 消</el-button>
-          <el-button type="primary" @click="submitEditCover" :loading="isEditUploading">确定</el-button>
-        </span>
-      </el-dialog>
-	  
+    <div style="width: 100%;height: 20rem;position: relative;">	
+    </div>
+    <span slot="footer" class="dialog-footer">
+      <el-button @click="closeup">取 消</el-button>
+      <el-button type="primary" @click="submitEditCover" :loading="isEditUploading">确定</el-button>
+    </span>
+  </el-dialog>
 </div>
 </template>
 
@@ -83,53 +70,60 @@
 export default {
   data() {
     return {
-      imageUrl: "",
       editDialogVisible: false,
       form: {
         month: ""
       },
-      tableData: [
-        {
-          date: "2016-05-02",
-          name: "王小虎",
-          province: "上海",
-          city: "普陀区",
-          address: "上海市普陀区金沙江路 1518 弄",
-          zip: 200333,
-          imageUrl:
-            "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1568904171877&di=e7af573fd1a040b228cc53a8b6448dea&imgtype=0&src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201508%2F09%2F20150809005320_whiQ4.jpeg"
-        },
-        {
-          date: "2016-05-04",
-          name: "王小虎",
-          province: "上海",
-          city: "普陀区",
-          address: "上海市普陀区金沙江路 1517 弄",
-          zip: 200333,
-          imageUrl:
-            "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1568904171877&di=e7af573fd1a040b228cc53a8b6448dea&imgtype=0&src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201508%2F09%2F20150809005320_whiQ4.jpeg"
-        },
-        {
-          date: "2016-05-01",
-          name: "王小虎",
-          province: "上海",
-          city: "普陀区",
-          address: "上海市普陀区金沙江路 1519 弄",
-          zip: 200333,
-          imageUrl:
-            "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1568904171877&di=e7af573fd1a040b228cc53a8b6448dea&imgtype=0&src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201508%2F09%2F20150809005320_whiQ4.jpeg"
-        }
-      ],
-      isEditUploading: false
+      pickerOptions: {},
+      endTime: 99999999999,
+      startTime: 0,
+      tableData: [],
+      isEditUploading: false,
+      pageNum: 0,
+      pageSize: 10
     };
   },
+  mounted() {
+    this.getlist();
+  },
   methods: {
+    add0(m) {
+      return m < 10 ? "0" + m : m;
+    },
+    format(shijianchuo) {
+      var shijianchuo = shijianchuo * 1000;
+      //shijianchuo是整数，否则要parseInt转换
+      var time = new Date(shijianchuo);
+
+      var y = time.getFullYear();
+      var m = time.getMonth() + 1;
+      var d = time.getDate();
+      var h = time.getHours();
+      var mm = time.getMinutes();
+      var s = time.getSeconds();
+      return (
+        y +
+        "-" +
+        this.add0(m) +
+        "-" +
+        this.add0(d) +
+        " " +
+        this.add0(h) +
+        ":" +
+        this.add0(mm) +
+        ":" +
+        this.add0(s)
+      );
+    },
     handleClick(row) {
-      console.log(row);
-      this.imageUrl = row.imageUrl;
       this.editDialogVisible = true;
     },
-    resetSearch() {},
+    resetSearch() {
+      this.endTime = 99999999999;
+      this.startTime = 0;
+      this.form.month = "";
+      this.getlist();
+    },
     submitEditCover() {
       this.isEditUploading = true;
     },
@@ -137,15 +131,28 @@ export default {
       this.isEditUploading = false;
       this.editDialogVisible = false;
     },
-    handleAvatarSuccess(res, file) {
-      console.log(file);
-      this.imageUrl = URL.createObjectURL(file.raw);
-    },
-    beforeAvatarUpload(file) {
-      this.imageUrl = URL.createObjectURL(file.raw);
-    },
     onSubmit() {
-      console.log(this.form.month)
+      console.log(this.form.month);
+      this.startTime = this.form.month[0] / 1000;
+      this.endTime = this.form.month[1] / 1000;
+      this.getlist();
+    },
+    getlist() {
+      var params = {
+        pageNum: this.pageNum,
+        pageSize: this.pageSize,
+        endTime: this.endTime,
+        startTime: this.startTime
+      };
+      this.axios
+        .post("/find/find_teacher", params)
+        .then(res => {
+          console.log(res);
+          this.tableData = res.data.data.list;
+        })
+        .catch(err => {
+          console.error(err);
+        });
     }
   }
 };

@@ -5,46 +5,41 @@
               <el-col :span="4" :push="0">
                 <h3>学生信息管理：</h3>
               </el-col>
+              <!-- <el-col :span="3" :push="17">
+                <el-button type="primary" @click="pushRouter">新增老师</el-button>
+              </el-col> -->
             </el-row>
-          </div>
-    <el-table  :data="tableData"   border style="width: 100%">
-    <el-table-column fixed  prop="date" label="姓名" > </el-table-column>
-    <el-table-column  prop="name"  label="年龄" > </el-table-column>
-    <el-table-column
-      prop="province"
-      label="班级"
-     >
-    </el-table-column>
-    <el-table-column
-      prop="city"
-      label="创建时间"
-     >
-    </el-table-column>
-    <el-table-column
-      prop="address"
-      label="地址"
+        </div>
+    <el-table  :data="tableData"    style="width: 100%">
+      <el-table-column  prop="id"  label="Id" > </el-table-column>
+      <el-table-column   prop="name" label="姓名" > </el-table-column>
+      <el-table-column  prop="phone"  label="phone">  </el-table-column>
+      <el-table-column  prop="state" label="状态" > </el-table-column>
+      <el-table-column
+        prop="classHour"
+        label="所剩课时次数（次数）"
+      >
+      </el-table-column>
+      <el-table-column
+        prop="ladder"
+        label="所剩陪练时长（分钟）"
+      >
+      </el-table-column>
+      <el-table-column
+        fixed="right"
+        label="操作"
+        width="400"
     >
+        <template slot-scope="scope">
+          <el-button @click="handleClick(scope.row)" type="primary" size="small">查看头像</el-button>
+          <el-button type="info" @click="pushrotu" size="small">课时管理</el-button>
+          <el-button type="info" @click="pushrotu2" size="small">陪练课管理</el-button>
+          <el-button type="danger" @click="handfreeze(scope.row)" size="small">冻结账户</el-button>
+        </template>
     </el-table-column>
-    <el-table-column
-      prop="zip"
-      label="电话"
-    >
-    </el-table-column>
-    <el-table-column
-      fixed="right"
-      label="操作"
-      width="300"
-   >
-      <template slot-scope="scope">
-        <el-button @click="handleClick(scope.row)" type="primary" size="small">查看头像</el-button>
-        <el-button type="info" size="small">课时管理</el-button>
-        <el-button type="danger" @click="handfreeze" size="small">冻结账户</el-button>
-      </template>
- 	</el-table-column>
   </el-table>
-  
   <el-dialog title="查看头像" :visible.sync="editDialogVisible" width="30rem">
-        <div style="width: 100%;height: 20rem;position: relative;">	
+    <div style="width: 100%;height: 20rem;position: relative;">	
 			<el-upload
 				class="avatar-uploader"
 				action="https://jsonplaceholder.typicode.com/posts/"
@@ -55,12 +50,12 @@
 				<img v-if="imageUrl" :src="imageUrl" class="avatar">
 				<i v-else class="el-icon-plus avatar-uploader-icon"></i>
 			</el-upload>
-        </div>
-        <span slot="footer" class="dialog-footer">
-          <el-button @click="closeup">取 消</el-button>
-          <el-button type="primary" @click="submitEditCover" :loading="isEditUploading">确定</el-button>
-        </span>
-      </el-dialog>
+    </div>
+    <span slot="footer" class="dialog-footer">
+      <el-button @click="closeup">取 消</el-button>
+      <el-button type="primary" @click="submitEditCover" :loading="isEditUploading">确定</el-button>
+    </span>
+  </el-dialog>
 	  
 </div>
 </template>
@@ -71,42 +66,47 @@ export default {
     return {
       imageUrl: "",
       editDialogVisible: false,
-      tableData: [
-        {
-          date: "2016-05-02",
-          name: "王小虎",
-          province: "上海",
-          city: "普陀区",
-          address: "上海市普陀区金沙江路 1518 弄",
-          zip: 200333,
-          imageUrl:
-            "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1568904171877&di=e7af573fd1a040b228cc53a8b6448dea&imgtype=0&src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201508%2F09%2F20150809005320_whiQ4.jpeg"
-        },
-        {
-          date: "2016-05-04",
-          name: "王小虎",
-          province: "上海",
-          city: "普陀区",
-          address: "上海市普陀区金沙江路 1517 弄",
-          zip: 200333,
-          imageUrl:
-            "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1568904171877&di=e7af573fd1a040b228cc53a8b6448dea&imgtype=0&src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201508%2F09%2F20150809005320_whiQ4.jpeg"
-        },
-        {
-          date: "2016-05-01",
-          name: "王小虎",
-          province: "上海",
-          city: "普陀区",
-          address: "上海市普陀区金沙江路 1519 弄",
-          zip: 200333,
-          imageUrl:
-            "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1568904171877&di=e7af573fd1a040b228cc53a8b6448dea&imgtype=0&src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201508%2F09%2F20150809005320_whiQ4.jpeg"
-        }
-      ],
-      isEditUploading: false
+      tableData: [],
+      isEditUploading: false,
+      pageNum: 0,
+      pageSize: 10
     };
   },
+  mounted() {
+    this.getstudentlist();
+  },
   methods: {
+    pushrotu(row){
+      this.$router.push({
+        path: "/school_management",
+        query: {
+          id: row.id
+        }
+      });
+    },
+    pushrotu2(row){
+      this.$router.push({
+        path: "/practiceClassManagement",
+        query: {
+          id: row.id
+        }
+      });
+    },
+    getstudentlist() {
+      var params = {
+        pageNum: this.pageNum,
+        pageSize: this.pageSize
+      };
+      this.axios
+        .post("/account/student_list", params)
+        .then(res => {
+          console.log(res);
+          this.tableData = res.data.data.list;
+        })
+        .catch(err => {
+          console.error(err);
+        });
+    },
     handleClick(row) {
       console.log(row);
       this.imageUrl = row.imageUrl;
@@ -126,6 +126,7 @@ export default {
     beforeAvatarUpload(file) {
       this.imageUrl = URL.createObjectURL(file.raw);
     },
+    
     handfreeze(row) {
       this.$confirm("此操作将冻结该用户, 是否继续?", "提示", {
         confirmButtonText: "确定",
@@ -133,10 +134,27 @@ export default {
         type: "warning"
       })
         .then(() => {
-          this.$message({
-            type: "success",
-            message: "冻结成功!"
-          });
+          var params = {
+            account: row.phone
+          };
+          console.log(row);
+          console.log(params);
+          this.axios
+            .post("/account/freeze", params)
+            .then(res => {
+              console.log(res);
+              if (res.data.code !== 10000) {
+                this.$message.error(res.data.msg);
+              } else {
+                this.$message({
+                  type: "success",
+                  message: "冻结成功!"
+                });
+              }
+            })
+            .catch(err => {
+              console.error(err);
+            });
         })
         .catch(() => {
           this.$message({

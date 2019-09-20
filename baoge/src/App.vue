@@ -137,4 +137,10 @@ body,
 .el-scrollbar__wrap {
   overflow-x: hidden;
 }
+.el-form-item__label{
+  text-align: center;
+}
+.el-scrollbar__bar.is-horizontal{
+  display: none;
+}
 </style>

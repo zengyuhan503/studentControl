@@ -5,6 +5,9 @@ import teacherContorl from '@/components/teacherContorl'
 import studentstatistics from '@/components/studentstatistics'
 import teacherstatistics from '@/components/teacherstatistics'
 import paytable from '@/components/paytable'
+import teacherinfo from '@/components/teacherinfo'
+import school_management from '@/components/school_management'
+import practiceClassManagement from '@/components/practiceClassManagement'
 Vue.use(Router)
 
 export default new Router({
@@ -12,6 +15,11 @@ export default new Router({
     {
       path: '/',
       name: '/',
+      component: studentControl
+    }
+    ,{
+      path: '/studentControl',
+      name: 'studentControl',
       component: studentControl
     }
     ,
@@ -34,6 +42,22 @@ export default new Router({
       path: '/paytable',
       name: 'paytable',
       component: paytable
+    },
+    {
+      path: '/teacherinfo',
+      name: 'teacherinfo',
+      component: teacherinfo
+    },
+    {
+      path: '/school_management',
+      name: 'school_management',
+      component: school_management
+    }
+    ,
+    {
+      path: '/practiceClassManagement',
+      name: 'practiceClassManagement',
+      component: practiceClassManagement
     }
   ]
 })
