@@ -29,6 +29,16 @@
         </template>
     </el-table-column>
   </el-table>
+   <div class="block">
+    <el-pagination
+      @current-change="handleCurrentChange"
+      :current-page.sync="currentPage"
+      layout="prev, pager, next"
+       :page-size="pageSize"
+        :hide-on-single-page="true"
+      :total="total"
+    ></el-pagination>
+  </div>
   <el-dialog title="编辑信息" :visible.sync="editDialogVisible" width="30rem">
     <div style="width: 100%;position: relative;">	
 		 <el-form ref="rulesrorm" :model="forms" label-width="120px">
@@ -79,13 +89,20 @@ export default {
       isEditUploading: false,
       pageNum: 0,
       pageSize: 10,
-      editrow: ""
+      editrow: "",
+      total: 10,
+      payrow: "",
+      currentPage: 1
     };
   },
   mounted() {
     this.getlist();
   },
   methods: {
+    handleCurrentChange(val) {
+      this.currentPage = val;
+      this.getlist();
+    },
     submitaddtteacher() {
       var params = this.forms;
       this.axios
@@ -112,13 +129,14 @@ export default {
     },
     getlist() {
       var params = {
-        pageNum: this.pageNum,
+        pageNum: this.currentPage,
         pageSize: this.pageSize
       };
       this.axios
         .post("/account/teacher_list", params)
         .then(res => {
           this.tableData = res.data.data.list;
+          this.total = res.data.data.total;
         })
         .catch(err => {
           console.error(err);

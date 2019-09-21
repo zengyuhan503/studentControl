@@ -63,6 +63,16 @@
       <el-button type="primary" @click="submitEditCover" :loading="isEditUploading">确定</el-button>
     </span>
   </el-dialog>
+   <div class="block">
+    <el-pagination
+      @current-change="handleCurrentChange"
+      :current-page.sync="currentPage"
+      layout="prev, pager, next"
+       :page-size="pageSize"
+        :hide-on-single-page="true"
+      :total="total"
+    ></el-pagination>
+  </div>
 </div>
 </template>
 
@@ -80,13 +90,20 @@ export default {
       tableData: [],
       isEditUploading: false,
       pageNum: 0,
-      pageSize: 10
+      pageSize: 10,
+      total: 10,
+      payrow: "",
+      currentPage: 1
     };
   },
   mounted() {
     this.getlist();
   },
   methods: {
+      handleCurrentChange(val) {
+      this.currentPage = val;
+      this.getlist();
+    },
     add0(m) {
       return m < 10 ? "0" + m : m;
     },
@@ -139,7 +156,7 @@ export default {
     },
     getlist() {
       var params = {
-        pageNum: this.pageNum,
+        pageNum: this.currentPage,
         pageSize: this.pageSize,
         endTime: this.endTime,
         startTime: this.startTime
@@ -149,6 +166,7 @@ export default {
         .then(res => {
           console.log(res);
           this.tableData = res.data.data.list;
+          this.total = res.data.data.total;
         })
         .catch(err => {
           console.error(err);

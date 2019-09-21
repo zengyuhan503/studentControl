@@ -25,6 +25,19 @@ module.exports = {
           '^/find': '/find',
         }
       },
+      '/remind': {
+        target: 'http://www.small-spark.com',
+        changeOrigin: true,
+        pathRewrite: {
+          '^/remind': '/remind',
+        }
+      }, '/pay': {
+        target: 'http://www.small-spark.com',
+        changeOrigin: true,
+        pathRewrite: {
+          '^/pay': '/pay',
+        }
+      },
     },
 
     // Various Dev Server settings
@@ -65,7 +78,7 @@ module.exports = {
     // Paths
     assetsRoot: path.resolve(__dirname, '../dist'),
     assetsSubDirectory: 'static',
-    assetsPublicPath: '/',
+    assetsPublicPath: './',
 
     /**
      * Source Maps

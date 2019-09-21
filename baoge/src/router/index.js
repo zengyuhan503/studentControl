@@ -8,6 +8,7 @@ import paytable from '@/components/paytable'
 import teacherinfo from '@/components/teacherinfo'
 import school_management from '@/components/school_management'
 import practiceClassManagement from '@/components/practiceClassManagement'
+import remindlist from '@/components/remindlist'
 Vue.use(Router)
 
 export default new Router({
@@ -58,6 +59,11 @@ export default new Router({
       path: '/practiceClassManagement',
       name: 'practiceClassManagement',
       component: practiceClassManagement
+    },
+    {
+      path: '/remindlist',
+      name: 'remindlist',
+      component: remindlist
     }
   ]
 })

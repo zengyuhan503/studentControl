@@ -3,28 +3,28 @@
     <div class="setGetAppPoolList">
         <el-row :gutter="0" class="formCont">
             <el-col :span="24" :push="0">
-                <h3>课时管理列表：</h3>
+                <h3>警报列表：</h3>
             </el-col>
         </el-row>
     </div>
     <el-table  :data="tableData"    style="width: 100%">
         <el-table-column  prop="id"  label="Id" > </el-table-column>
         <el-table-column   prop="name" label="姓名" > </el-table-column>
-        <el-table-column  prop="student"  label="学生姓名">  </el-table-column>
         <el-table-column  prop="type" label="课时" > </el-table-column>
-        <el-table-column   label="开始时间" >
-            <template slot-scope="scope">
-                <div>
-                    {{format(scope.row.startTime)}}
-                </div>
-            </template>
+        <el-table-column  prop="createTime" label="创建时间" >
         </el-table-column>
-        <el-table-column   label="结束时间" >
-            <template slot-scope="scope">
-            <div>{{format(scope.row.endTime)}}</div>
-            </template>
-        </el-table-column>
+         
     </el-table>
+    <div class="block">
+    <el-pagination
+      @current-change="handleCurrentChange"
+      :current-page.sync="currentPage"
+      layout="prev, pager, next"
+       :page-size="pageSize"
+        :hide-on-single-page="true"
+      :total="total"
+    ></el-pagination>
+  </div>
 </div>
 </template>
 
@@ -34,7 +34,10 @@ export default {
     return {
       tableData: [],
       pageNum: 0,
-      pageSize: 10
+      pageSize: 10,
+      total: 10,
+      payrow: "",
+      currentPage: 1
     };
   },
   mounted() {
@@ -43,6 +46,12 @@ export default {
     this.getlist(id);
   },
   methods: {
+    handleCurrentChange(val) {
+      this.currentPage = val;
+      this.getlist();
+    },
+    handleClick() {},
+    pushrotu() {},
     add0(m) {
       return m < 10 ? "0" + m : m;
     },
@@ -75,14 +84,15 @@ export default {
     getlist(id) {
       var params = {
         id: id,
-        pageNum: this.pageNum,
+        pageNum: this.currentPage,
         pageSize: this.pageSize
       };
       this.axios
-        .post("/account/school_management", params)
+        .post("/remind/remind_list", params)
         .then(res => {
           console.log(res);
           this.tableData = res.data.data.list;
+           this.total = res.data.data.total;
         })
         .catch(err => {
           console.error(err);

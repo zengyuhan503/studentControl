@@ -34,7 +34,16 @@
       </el-table-column>
     </el-table-column>
   </el-table>
-  
+  <div class="block">
+    <el-pagination
+      @current-change="handleCurrentChange"
+      :current-page.sync="currentPage"
+      layout="prev, pager, next"
+       :page-size="pageSize"
+        :hide-on-single-page="true"
+      :total="total"
+    ></el-pagination>
+  </div>
 	  
 </div>
 </template>
@@ -45,7 +54,10 @@ export default {
     return {
       tableData: [],
       pageNum: 1,
-      pageSize: 10
+      pageSize: 10,
+      total: 10,
+      payrow: "",
+      currentPage: 1
     };
   },
   mounted() {
@@ -54,6 +66,10 @@ export default {
     this.getlist(id);
   },
   methods: {
+    handleCurrentChange(val) {
+      this.currentPage = val;
+      this.getlist();
+    },
     add0(m) {
       return m < 10 ? "0" + m : m;
     },
@@ -94,6 +110,7 @@ export default {
         .then(res => {
           console.log(res);
           this.tableData = res.data.data.list;
+          this.total = res.data.data.total;
         })
         .catch(err => {
           console.error(err);

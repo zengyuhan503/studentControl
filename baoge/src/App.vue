@@ -50,7 +50,7 @@
               <span>报警设置</span>
             </template>
             <el-menu-item-group>
-              <el-menu-item index="/studentinfo">报警列表</el-menu-item>
+              <el-menu-item index="/remindlist">报警列表</el-menu-item>
             </el-menu-item-group>
           </el-submenu>
           <el-menu-item index="/paytable">
@@ -72,14 +72,18 @@
 export default {
   data() {
     return {
-      defaultActive: ""
+      defaultActive: "/"
     };
   },
-  created() {},
-  mounted() {
-    console.log(this.$route.path);
-    this.defaultActive = "/";
+  created() {
+    if (this.$route.name == "studentControl") {
+      var urls = "/";
+    } else {
+      var urls = this.$route.path;
+    }
+    this.defaultActive = urls;
   },
+  mounted() {},
   watch: {},
   methods: {}
 };
@@ -131,16 +135,29 @@ body,
 }
 .mainCont {
   background: #fff;
-  padding: 3% 6%;
   padding-bottom: 5%;
 }
-.el-scrollbar__wrap {
-  overflow-x: hidden;
+.el-scrollbar__view > div {
+  padding: 3% 6%;
 }
-.el-form-item__label{
+.el-scrollbar__wrap {
+  overflow-x: hidden !important;
+}
+.el-form-item__label {
   text-align: center;
 }
-.el-scrollbar__bar.is-horizontal{
-  display: none;
+.el-scrollbar__bar.is-horizontal {
+  display: none !important;
+}
+.block {
+  text-align: center;
+  padding: 15px;
+}
+.el-scrollbar__view > div > .el-table {
+  min-height: 600px;
+  width: 95% !important;
+}
+.el-submenu .el-menu-item {
+  min-width: 150px;
 }
 </style>

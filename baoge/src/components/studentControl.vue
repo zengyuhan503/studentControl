@@ -10,7 +10,7 @@
               </el-col> -->
             </el-row>
         </div>
-    <el-table  :data="tableData"    style="width: 100%">
+    <el-table   class="tablist"  :data="tableData"    style="width: 100%">
       <el-table-column  prop="id"  label="Id" > </el-table-column>
       <el-table-column   prop="name" label="姓名" > </el-table-column>
       <el-table-column  prop="phone"  label="phone">  </el-table-column>
@@ -31,13 +31,23 @@
         width="400"
     >
         <template slot-scope="scope">
-          <el-button @click="handleClick(scope.row)" type="primary" size="small">查看头像</el-button>
+          <!-- <el-button @click="handleClick(scope.row)" type="primary" size="small">查看头像</el-button> -->
           <el-button type="info" @click="pushrotu" size="small">课时管理</el-button>
           <el-button type="info" @click="pushrotu2" size="small">陪练课管理</el-button>
           <el-button type="danger" @click="handfreeze(scope.row)" size="small">冻结账户</el-button>
         </template>
     </el-table-column>
   </el-table>
+  <div class="block">
+    <el-pagination
+      @current-change="handleCurrentChange"
+      :current-page.sync="currentPage"
+      layout="prev, pager, next"
+       :page-size="pageSize"
+        :hide-on-single-page="true"
+      :total="total"
+    ></el-pagination>
+  </div>
   <el-dialog title="查看头像" :visible.sync="editDialogVisible" width="30rem">
     <div style="width: 100%;height: 20rem;position: relative;">	
 			<el-upload
@@ -69,13 +79,20 @@ export default {
       tableData: [],
       isEditUploading: false,
       pageNum: 0,
-      pageSize: 10
+      pageSize: 10,
+      total: 10,
+      payrow: "",
+      currentPage: 1
     };
   },
   mounted() {
     this.getstudentlist();
   },
   methods: {
+      handleCurrentChange(val) {
+      this.currentPage = val;
+      this.getstudentlist();
+    },
     pushrotu(row){
       this.$router.push({
         path: "/school_management",
@@ -94,7 +111,7 @@ export default {
     },
     getstudentlist() {
       var params = {
-        pageNum: this.pageNum,
+        pageNum: this.currentPage,
         pageSize: this.pageSize
       };
       this.axios
@@ -102,6 +119,9 @@ export default {
         .then(res => {
           console.log(res);
           this.tableData = res.data.data.list;
+           this.total = res.data.data.total;
+           
+          console.log(this.currentPage, this.total);
         })
         .catch(err => {
           console.error(err);
@@ -146,6 +166,7 @@ export default {
               if (res.data.code !== 10000) {
                 this.$message.error(res.data.msg);
               } else {
+                this.getstudentlist()
                 this.$message({
                   type: "success",
                   message: "冻结成功!"
