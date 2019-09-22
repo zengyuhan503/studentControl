@@ -81,10 +81,7 @@
               </el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="存放位置：">
-            <el-input v-model="forms.account" placeholder="如D:/workspace"></el-input>
-          </el-form-item>
-          
+         
         </el-form>
     </div>
     <span slot="footer" class="dialog-footer">
@@ -158,17 +155,19 @@ export default {
         name: this.names,
         pageNum: this.pageNum,
         pageSize: this.pageSize,
-        place: this.forms.account,
         startTime: this.startTime ? this.startTime * 1000 : 0,
         type: this.forms.type
       };
-      this.axios.post("/find/export",params)
-      .then(res => {
-        console.log(res)
-      })
-      .catch(err => {
-        console.error(err); 
-      })
+      this.axios
+        .post("/find/export", params)
+        .then(res => {
+          console.log(res);
+          var dataurl = res.data;
+          window.open(dataurl);
+        })
+        .catch(err => {
+          console.error(err);
+        });
     },
     dowExcel() {
       this.editDialogVisible = true;

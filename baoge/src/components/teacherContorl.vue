@@ -12,10 +12,10 @@
         </div>
     <el-table  :data="tableData"    style="width: 100%">
       <!-- <el-table-column  prop="id"  label="Id" > </el-table-column> -->
-      <el-table-column   prop="name" label="姓名" > </el-table-column>
-      <el-table-column  prop="account"  label="account">  </el-table-column>
-      <el-table-column  prop="state" label="状态" > </el-table-column>
-      <el-table-column
+    <el-table-column   prop="name" label="姓名" > </el-table-column>
+    <el-table-column  prop="account"  label="account">  </el-table-column>
+    <el-table-column  prop="state" label="状态" > </el-table-column>
+    <el-table-column
         fixed="right"
         label="操作"
         width="350"
@@ -25,7 +25,6 @@
           <el-button type="info" size="small" @click="handgetinfo(scope.row)">上课情况</el-button>
           <el-button type="danger" @click="handfreeze(scope.row)" size="small">冻结账户</el-button>
           <el-button type="danger" @click="handdelte(scope.row)" size="small">删除</el-button>
-       
         </template>
     </el-table-column>
   </el-table>
