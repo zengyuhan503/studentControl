@@ -11,7 +11,7 @@
       <el-col>
         <el-form ref="form" :model="form" class="filtrate" label-width="80px">
           <el-row :gutter="10">
-            <el-col :span="8">
+            <el-col :span="7">
                <el-date-picker
                 v-model="form.month"
                 type="daterange"
@@ -24,19 +24,29 @@
                 :picker-options="pickerOptions">
               </el-date-picker>
             </el-col>
+            <el-col :span="4">
+               <el-form-item label="学生姓名">
+                <el-input v-model="form.name" placeholder="请输入内容"></el-input>
+              </el-form-item>
+            </el-col>
             <el-col :span="8">
               <el-form-item>  
                 <el-button type="primary" @click="onSubmit">搜索</el-button>
                 <el-button @click="resetSearch">重置</el-button>
               </el-form-item>
             </el-col>
+            <el-col :span="4">
+                <el-button type="primary" @click="dowExcel">导出Excel</el-button>
+            </el-col>
           </el-row>
         </el-form>
       </el-col>
     </div>
   <el-table  :data="tableData"    style="width: 100%">
-    <el-table-column fixed  prop="id" label="Id" > </el-table-column>
+    <!-- <el-table-column fixed  prop="id" label="Id" > </el-table-column> -->
+   
     <el-table-column  prop="name"  label="姓名" > </el-table-column>
+     <el-table-column  prop="type"  label="类型" > </el-table-column>
     <el-table-column   label="开始时间" >
             <template slot-scope="scope">
                 <div>
@@ -55,12 +65,31 @@
     >
     </el-table-column>
   </el-table>
-  <el-dialog title="查看头像" :visible.sync="editDialogVisible" width="30rem">
-    <div style="width: 100%;height: 20rem;position: relative;">	
+ <el-dialog title="导出Excel" :visible.sync="editDialogVisible" width="30rem">
+    <div style="width: 100%;position: relative;">	
+		 <el-form ref="rulesrorm" :model="forms" label-width="120px">
+          <el-form-item label="文件名称">
+            <el-input v-model="forms.name" placeholder=""></el-input>
+          </el-form-item>
+         <el-form-item label="选择类型">
+            <el-select v-model="forms.type" placeholder="请选择">
+              <el-option
+                v-for="item in typeoptions"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value">
+              </el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="存放位置：">
+            <el-input v-model="forms.account" placeholder="如D:/workspace"></el-input>
+          </el-form-item>
+          
+        </el-form>
     </div>
     <span slot="footer" class="dialog-footer">
-      <el-button @click="closeup">取 消</el-button>
-      <el-button type="primary" @click="submitEditCover" :loading="isEditUploading">确定</el-button>
+      <el-button @click="editDialogVisible=false">取 消</el-button>
+      <el-button type="primary" @click="submitform" :loading="isEditUploading">确定</el-button>
     </span>
   </el-dialog>
    <div class="block">
@@ -80,9 +109,30 @@
 export default {
   data() {
     return {
+      typeoptions: [
+        {
+          value: "",
+          label: "所有"
+        },
+        {
+          value: "1",
+          label: "课时"
+        },
+        {
+          value: "2",
+          label: "陪练"
+        }
+      ],
+      forms: {
+        name: "",
+        account: "",
+        type: ""
+      },
+      names: "",
       editDialogVisible: false,
       form: {
-        month: ""
+        month: "",
+        name: ""
       },
       pickerOptions: {},
       endTime: 99999999999,
@@ -100,7 +150,30 @@ export default {
     this.getlist();
   },
   methods: {
-      handleCurrentChange(val) {
+    submitform() {
+      var params = {
+        endTime: this.endTime ? this.endTime * 1000 : 99999999999,
+        export: "1",
+        file: this.forms.name,
+        name: this.names,
+        pageNum: this.pageNum,
+        pageSize: this.pageSize,
+        place: this.forms.account,
+        startTime: this.startTime ? this.startTime * 1000 : 0,
+        type: this.forms.type
+      };
+      this.axios.post("/find/export",params)
+      .then(res => {
+        console.log(res)
+      })
+      .catch(err => {
+        console.error(err); 
+      })
+    },
+    dowExcel() {
+      this.editDialogVisible = true;
+    },
+    handleCurrentChange(val) {
       this.currentPage = val;
       this.getlist();
     },
@@ -149,9 +222,11 @@ export default {
       this.editDialogVisible = false;
     },
     onSubmit() {
-      console.log(this.form.month);
-      this.startTime = this.form.month[0]/1000;
-      this.endTime = this.form.month[1]/1000;
+      this.startTime =
+        this.form.month[0] / 1000 ? this.form.month[0] / 1000 : 0;
+      this.endTime =
+        this.form.month[1] / 1000 ? this.form.month[1] / 1000 : 99999999999;
+      this.names = this.form.name;
       this.getlist();
     },
     getlist() {
@@ -159,7 +234,8 @@ export default {
         pageNum: this.currentPage,
         pageSize: this.pageSize,
         endTime: this.endTime,
-        startTime: this.startTime
+        startTime: this.startTime,
+        name: this.names
       };
       this.axios
         .post("/find/find_student", params)

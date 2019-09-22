@@ -15,10 +15,10 @@
             </el-row>
         </div>
     <el-table  :data="tableData"    style="width: 100%">
-        <el-table-column  prop="id"  label="Id" > </el-table-column>
+        <!-- <el-table-column  prop="id"  label="Id" > </el-table-column> -->
         <el-table-column   prop="name" label="姓名" > </el-table-column>
-        <el-table-column  prop="student"  label="学生姓名">  </el-table-column>
-        <el-table-column  prop="type" label="课时" > </el-table-column>
+        <el-table-column  prop="teacher"  label="老师姓名">  </el-table-column>
+        <el-table-column  prop="type" label="类型" > </el-table-column>
         <el-table-column   label="开始时间" >
             <template slot-scope="scope">
                 <div>

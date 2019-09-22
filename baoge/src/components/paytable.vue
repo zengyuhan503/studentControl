@@ -27,7 +27,7 @@
       </el-col>
     </div>
   <el-table  class="tablist" :data="tableData"    style="width: 100%">
-    <el-table-column fixed  prop="id" label="Id" > </el-table-column>
+    <!-- <el-table-column fixed  prop="id" label="Id" > </el-table-column> -->
     <el-table-column  prop="name"  label="姓名" > </el-table-column>
     <el-table-column  prop="phone"  label="电话" > </el-table-column>
     <el-table-column  prop="classHour"  label="剩余课时次数" > </el-table-column>

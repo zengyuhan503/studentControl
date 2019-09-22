@@ -14,7 +14,7 @@ Vue.use(VueAxios, axios);
 Vue.use(ElementUI)
 Vue.config.productionTip = false
 
-axios.defaults.baseURL = process.env.API_ROOT;
+// axios.defaults.baseURL = process.env.API_ROOT;
 axios.interceptors.request.use(config => {
   // Do something before request is sent
   return config;

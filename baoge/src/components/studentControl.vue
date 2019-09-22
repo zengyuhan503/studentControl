@@ -11,7 +11,7 @@
             </el-row>
         </div>
     <el-table   class="tablist"  :data="tableData"    style="width: 100%">
-      <el-table-column  prop="id"  label="Id" > </el-table-column>
+      <!-- <el-table-column  prop="id"  label="Id" > </el-table-column> -->
       <el-table-column   prop="name" label="姓名" > </el-table-column>
       <el-table-column  prop="phone"  label="phone">  </el-table-column>
       <el-table-column  prop="state" label="状态" > </el-table-column>
@@ -32,8 +32,8 @@
     >
         <template slot-scope="scope">
           <!-- <el-button @click="handleClick(scope.row)" type="primary" size="small">查看头像</el-button> -->
-          <el-button type="info" @click="pushrotu" size="small">课时管理</el-button>
-          <el-button type="info" @click="pushrotu2" size="small">陪练课管理</el-button>
+          <el-button type="info" @click="pushrotu(scope.row)" size="small">课时管理</el-button>
+          <el-button type="info" @click="pushrotu2(scope.row)" size="small">陪练课管理</el-button>
           <el-button type="danger" @click="handfreeze(scope.row)" size="small">冻结账户</el-button>
         </template>
     </el-table-column>
@@ -94,6 +94,7 @@ export default {
       this.getstudentlist();
     },
     pushrotu(row){
+      console.log(row)
       this.$router.push({
         path: "/school_management",
         query: {

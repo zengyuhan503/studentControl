@@ -130,6 +130,7 @@ body,
 }
 #app .el-menu-vertical-demo:not(.el-menu--collapse) {
   height: 100%;
+  
   width: 100%;
   min-height: 400px;
 }

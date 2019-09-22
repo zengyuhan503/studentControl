@@ -11,7 +11,7 @@
             </el-row>
         </div>
     <el-table  :data="tableData"    style="width: 100%">
-      <el-table-column  prop="id"  label="Id" > </el-table-column>
+      <!-- <el-table-column  prop="id"  label="Id" > </el-table-column> -->
       <el-table-column   prop="name" label="姓名" > </el-table-column>
       <el-table-column  prop="account"  label="account">  </el-table-column>
       <el-table-column  prop="state" label="状态" > </el-table-column>
