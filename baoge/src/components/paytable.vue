@@ -13,7 +13,7 @@
           <el-row :gutter="10">
             <el-col :span="5">
                <el-form-item label="学生姓名">
-                <el-input v-model="form.VideoName" placeholder="请输入内容"></el-input>
+                <el-input v-model="form.name" placeholder="请输入内容"></el-input>
               </el-form-item>
             </el-col>
             <el-col :span="8">
@@ -88,7 +88,8 @@ export default {
       time: "",
       editDialogVisible: false,
       form: {
-        month: ""
+        month: "",
+        name: ""
       },
       pickerOptions: {},
       endTime: 99999999999,
@@ -117,7 +118,7 @@ export default {
     resetSearch() {
       this.endTime = 99999999999;
       this.startTime = 0;
-      this.form.month = "";
+      this.form.name = "";
       this.getlist();
     },
     submitEditCover() {
@@ -161,12 +162,22 @@ export default {
       this.editDialogVisible = false;
     },
     onSubmit() {
-      this.startTime = this.form.month[0] / 1000;
-      this.endTime = this.form.month[1] / 1000;
-      this.getlist();
+      var params = {
+        name: this.form.name
+      };
+      this.axios
+        .post("/pay/student_find", params)
+        .then(res => {
+          console.log(res);
+          this.tableData = res.data.data.list;
+        })
+        .catch(err => {
+          console.error(err);
+        });
     },
     getlist() {
       var params = {
+        name: this.form.name,
         pageNum: this.currentPage,
         pageSize: this.pageSize,
         endTime: this.endTime,

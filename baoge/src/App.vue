@@ -8,6 +8,21 @@
         <el-col class="logcontMain" :span="3">
           <el-col class="grid-content bg-purple-dark logcont">O M S</el-col>
         </el-col>
+        <el-col :span="4" :push="18">
+          <div class="grid-content heaimg bg-purple-light">
+            <!-- <el-col :span="4" :push="2" style="color:#FFFFFF;font-size:10px;line-height:69px">曾钰涵</el-col> -->
+            <el-col :span="3" :push="3">
+              <el-dropdown @command="handleCommand">
+                <span class="el-dropdown-link">
+                  <img src="../static/image/headimg.png" style="width:70%" alt />
+                </span>
+                <el-dropdown-menu slot="dropdown">
+                  <el-dropdown-item command="a">登出</el-dropdown-item>
+                </el-dropdown-menu>
+              </el-dropdown>
+            </el-col>
+          </div>
+        </el-col>
       </el-row>
     </el-header>
     <el-row class="tac">
@@ -76,6 +91,8 @@ export default {
     };
   },
   created() {
+    // this.$route.path("loginpage");
+    this.$router.push("/loginpage");
     if (this.$route.name == "studentControl") {
       var urls = "/";
     } else {
@@ -85,7 +102,14 @@ export default {
   },
   mounted() {},
   watch: {},
-  methods: {}
+  methods: {
+    handleCommand(command) {
+      this.$router.push("/loginpage");
+      /*this.axios.get('/ssnwtweb/api/admins/logout').then((res)=>{
+
+        });*/
+    }
+  }
 };
 </script>
 <style>
@@ -130,7 +154,7 @@ body,
 }
 #app .el-menu-vertical-demo:not(.el-menu--collapse) {
   height: 100%;
-  
+
   width: 100%;
   min-height: 400px;
 }
@@ -160,5 +184,12 @@ body,
 }
 .el-submenu .el-menu-item {
   min-width: 150px;
+}
+#app .heaimg {
+  line-height: 60px;
+  text-align: center;
+}
+#app .heaimg img {
+  vertical-align: middle;
 }
 </style>

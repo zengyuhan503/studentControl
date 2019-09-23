@@ -5,9 +5,9 @@
               <el-col :span="4" :push="0">
                 <h3>学生信息管理：</h3>
               </el-col>
-              <!-- <el-col :span="3" :push="17">
-                <el-button type="primary" @click="pushRouter">新增老师</el-button>
-              </el-col> -->
+              <el-col :span="3" :push="17">
+                <el-button type="primary" @click="handleClick">新增学生</el-button>
+              </el-col>
             </el-row>
         </div>
     <el-table   class="tablist"  :data="tableData"    style="width: 100%">
@@ -31,7 +31,7 @@
         width="400"
     >
         <template slot-scope="scope">
-          <!-- <el-button @click="handleClick(scope.row)" type="primary" size="small">查看头像</el-button> -->
+          <!-- <el-button @click="handleClick(scope.row)" type="primary" size="small">添加头像</el-button> -->
           <el-button type="info" @click="pushrotu(scope.row)" size="small">课时管理</el-button>
           <el-button type="info" @click="pushrotu2(scope.row)" size="small">陪练课管理</el-button>
           <el-button type="danger" @click="handfreeze(scope.row)" size="small">冻结账户</el-button>
@@ -48,12 +48,22 @@
       :total="total"
     ></el-pagination>
   </div>
-  <el-dialog title="查看头像" :visible.sync="editDialogVisible" width="30rem">
-    <div style="width: 100%;height: 20rem;position: relative;">	
+  <el-dialog title="增加学生" :visible.sync="editDialogVisible" width="30rem">
+    <div style="width: 100%;position: relative;">	
+      <el-input v-model="form.filename" placeholder="别名(由数字、字母、下划线组成)" style="    width: 55%;  margin: auto;   text-align: center;
+    display: block;
+    margin: 15px auto;"></el-input>
+     <el-input v-model="form.name" placeholder="名字" style="    width: 55%;  margin: auto;   text-align: center;
+    display: block;
+    margin: 15px auto;"></el-input>
+      <el-input v-model="form.phone" placeholder="电话" style="    width: 55%;  margin: auto;   text-align: center;
+    display: block;
+    margin: 15px auto;"></el-input>
 			<el-upload
 				class="avatar-uploader"
 				action="https://jsonplaceholder.typicode.com/posts/"
 				:show-file-list="false"
+        :http-request="postheadeimg"
 				:auto-upload="false"
 				:on-success="handleAvatarSuccess"
 				:on-change="beforeAvatarUpload">
@@ -77,24 +87,64 @@ export default {
       imageUrl: "",
       editDialogVisible: false,
       tableData: [],
+      form: {},
       isEditUploading: false,
       pageNum: 0,
       pageSize: 10,
       total: 10,
       payrow: "",
-      currentPage: 1
+      currentPage: 1,
+      fileobj: "",
+      rowinfo: ""
     };
   },
   mounted() {
     this.getstudentlist();
   },
   methods: {
-      handleCurrentChange(val) {
+    handleCurrentChange(val) {
       this.currentPage = val;
       this.getstudentlist();
     },
-    pushrotu(row){
-      console.log(row)
+    postheadeimg() {
+      var params = new FormData();
+      params.append("file", this.fileobj);
+      if (
+        this.fileobj == "" ||
+        this.form.name == "" ||
+        this.form.phone == "" ||
+        this.form.alias == ""
+      ) {
+        this.$message.error("添加内容必须填写");
+        this.isEditUploading = false;
+        return false;
+      }
+      this.axios
+        .post(
+          "/account/student_add?alias=" +
+            this.form.filename +
+            "&name=" +
+            this.form.name +
+            "&phone=" +
+            this.form.phone,
+          params
+        )
+        .then(res => {
+          console.log(res);
+          if (res.data.code == 20000) {
+            this.$message.error(res.data.msg);
+            return false;
+          }else{
+            
+          }
+          this.isEditUploading = false;
+        })
+        .catch(err => {
+          console.error(err);
+        });
+    },
+    pushrotu(row) {
+      console.log(row);
       this.$router.push({
         path: "/school_management",
         query: {
@@ -102,7 +152,7 @@ export default {
         }
       });
     },
-    pushrotu2(row){
+    pushrotu2(row) {
       this.$router.push({
         path: "/practiceClassManagement",
         query: {
@@ -120,20 +170,19 @@ export default {
         .then(res => {
           console.log(res);
           this.tableData = res.data.data.list;
-           this.total = res.data.data.total;
-           
+          this.total = res.data.data.total;
+
           console.log(this.currentPage, this.total);
         })
         .catch(err => {
           console.error(err);
         });
     },
-    handleClick(row) {
-      console.log(row);
-      this.imageUrl = row.imageUrl;
+    handleClick() {
       this.editDialogVisible = true;
     },
     submitEditCover() {
+      this.postheadeimg();
       this.isEditUploading = true;
     },
     closeup() {
@@ -144,10 +193,12 @@ export default {
       console.log(file);
       this.imageUrl = URL.createObjectURL(file.raw);
     },
-    beforeAvatarUpload(file) {
+    beforeAvatarUpload(file, files) {
+      this.fileobj = file.raw;
       this.imageUrl = URL.createObjectURL(file.raw);
+      console.log(file, files);
     },
-    
+
     handfreeze(row) {
       this.$confirm("此操作将冻结该用户, 是否继续?", "提示", {
         confirmButtonText: "确定",
@@ -167,7 +218,7 @@ export default {
               if (res.data.code !== 10000) {
                 this.$message.error(res.data.msg);
               } else {
-                this.getstudentlist()
+                this.getstudentlist();
                 this.$message({
                   type: "success",
                   message: "冻结成功!"

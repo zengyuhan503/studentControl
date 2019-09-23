@@ -157,9 +157,29 @@ export default {
         type: this.forms.type
       };
       this.axios
-        .post("/find/export", params)
-        .then(res => {
-          console.log(res);
+        .post("/find/export", params, { responseType: "arraybuffer" })
+        .then(_res => {
+          const blob = new Blob([_res.data], {
+            type:
+              "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8"
+          });
+          const a = document.createElement("a");
+          // 生成文件路径
+          let href = window.URL.createObjectURL(blob);
+          console.log(href);
+          a.href = href;
+          let _fileName = _res.headers["content-disposition"]
+            .split(";")[1]
+            .split("=")[1]
+            .split(".")[0];
+          // 文件名中有中文 则对文件名进行转码
+          a.download = decodeURIComponent(_fileName);
+          // 利用a标签做下载
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+          window.URL.revokeObjectURL(href);
+          this.editDialogVisible = false;
         })
         .catch(err => {
           console.error(err);

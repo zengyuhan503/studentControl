@@ -5,7 +5,8 @@ import App from './App'
 import router from './router'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
-
+import VueParticles from 'vue-particles'  
+Vue.use(VueParticles)  
 import axios from 'axios';
 import VueAxios from 'vue-axios';
 
@@ -14,7 +15,7 @@ Vue.use(VueAxios, axios);
 Vue.use(ElementUI)
 Vue.config.productionTip = false
 
-// axios.defaults.baseURL = process.env.API_ROOT;
+axios.defaults.baseURL = process.env.API_ROOT;
 axios.interceptors.request.use(config => {
   // Do something before request is sent
   return config;

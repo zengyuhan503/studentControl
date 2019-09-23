@@ -9,6 +9,7 @@ import teacherinfo from '@/components/teacherinfo'
 import school_management from '@/components/school_management'
 import practiceClassManagement from '@/components/practiceClassManagement'
 import remindlist from '@/components/remindlist'
+import loginpage from '@/components/login-page'
 Vue.use(Router)
 
 export default new Router({
@@ -22,6 +23,10 @@ export default new Router({
       path: '/studentControl',
       name: 'studentControl',
       component: studentControl
+    },{
+      path: '/loginpage',
+      name: 'loginpage',
+      component: loginpage
     }
     ,
     {
