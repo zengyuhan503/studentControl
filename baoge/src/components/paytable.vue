@@ -30,7 +30,7 @@
     <!-- <el-table-column fixed  prop="id" label="Id" > </el-table-column> -->
     <el-table-column  prop="name"  label="姓名" > </el-table-column>
     <el-table-column  prop="phone"  label="电话" > </el-table-column>
-    <el-table-column  prop="classHour"  label="剩余课时次数" > </el-table-column>
+    <el-table-column  prop="classHour"  label="剩余主课次数" > </el-table-column>
      <el-table-column  prop="ladder"  label="剩余陪练课时常" > </el-table-column>
     <el-table-column  prop="state"  label="状态" >
     </el-table-column>
@@ -59,15 +59,18 @@
               <el-tab-pane name="xs" label="学时充值">
                   <el-form :inline="true" :model="form.formInline" class="demo-form-inline">
                       <el-form-item label="选择次数">
-                          <el-input-number v-model="num" :min="1" :max="10" label="描述文字"></el-input-number>
+                          <el-input-number v-model="num" :min="1" :max="10" ></el-input-number>
                       </el-form-item>
                   </el-form>
               </el-tab-pane>
               <el-tab-pane name="ks" label="陪练课充值">
                     <el-form :inline="true" :model="form.text" class="demo-form-inline">
                       <el-form-item label="输入时常">
-                      <el-input v-model="time" placeholder="输入时常"></el-input>
-                  </el-form-item>
+                         <el-form-item label="选择次数">
+                          <el-input-number v-model="time" :min="1" :max="10" ></el-input-number>
+                      </el-form-item>
+                      <!-- <el-input v-model="time" placeholder="输入时常"></el-input> -->
+                       </el-form-item>
                   </el-form>
               </el-tab-pane>
           </el-tabs>

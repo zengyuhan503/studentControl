@@ -10,6 +10,8 @@ import school_management from '@/components/school_management'
 import practiceClassManagement from '@/components/practiceClassManagement'
 import remindlist from '@/components/remindlist'
 import loginpage from '@/components/login-page'
+// import lista from '@/components/lista'
+import statistical from '@/components/statistical'
 Vue.use(Router)
 
 export default new Router({
@@ -69,6 +71,11 @@ export default new Router({
       path: '/remindlist',
       name: 'remindlist',
       component: remindlist
+    },
+    {
+      path: '/statistical',
+      name: 'statistical',
+      component: statistical
     }
   ]
 })

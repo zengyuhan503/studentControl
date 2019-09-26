@@ -58,6 +58,9 @@
             <el-menu-item-group>
               <el-menu-item index="/teacherstatistics">老师信息</el-menu-item>
             </el-menu-item-group>
+            <el-menu-item-group>
+              <el-menu-item index="/statistical">统计列表</el-menu-item>
+            </el-menu-item-group>
           </el-submenu>
           <el-submenu index="3">
             <template slot="title">
@@ -183,7 +186,7 @@ body,
   width: 95% !important;
 }
 .el-submenu .el-menu-item {
-  min-width: 150px;
+  min-width: auto !important;
 }
 #app .heaimg {
   line-height: 60px;

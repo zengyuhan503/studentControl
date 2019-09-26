@@ -3,8 +3,9 @@
     <div class="setGetAppPoolList">
         <el-row :gutter="0" class="formCont">
           <el-col :span="4" :push="0">
-            <h3>学生统计：</h3>
+            <h3>统计列表：</h3>
           </el-col>
+           
         </el-row>
     </div>
     <div class="setGetAppPoolList">
@@ -24,11 +25,7 @@
                 :picker-options="pickerOptions">
               </el-date-picker>
             </el-col>
-            <el-col :span="4">
-               <el-form-item label="学生姓名">
-                <el-input v-model="form.name" placeholder="请输入内容"></el-input>
-              </el-form-item>
-            </el-col>
+         
             <el-col :span="8">
               <el-form-item>  
                 <el-button type="primary" @click="onSubmit">搜索</el-button>
@@ -42,28 +39,12 @@
         </el-form>
       </el-col>
     </div>
-  <el-table  :data="tableData"    style="width: 100%">
+  <el-table  :span-method="arraySpanMethod"  :data="tableData"    style="width: 100%">
     <!-- <el-table-column fixed  prop="id" label="Id" > </el-table-column> -->
-   
-    <el-table-column  prop="name"  label="姓名" > </el-table-column>
-     <el-table-column  prop="type"  label="类型" > </el-table-column>
-    <el-table-column   label="开始时间" >
-            <template slot-scope="scope">
-                <div>
-                    {{format(scope.row.startTime)}}
-                </div>
-            </template>
-        </el-table-column>
-    <el-table-column   label="结束时间" >
-        <template slot-scope="scope">
-  <div>{{format(scope.row.endTime)}}</div>
-</template>
+    <el-table-column  prop="name"  label="姓名" >
     </el-table-column>
-    <el-table-column
-      prop="teacher"
-      label="老师"
-    >
-    </el-table-column>
+    <el-table-column  prop="time"  label="次数" > </el-table-column>
+    <el-table-column  prop="type" label="类型"> </el-table-column>
   </el-table>
  <el-dialog title="导出Excel" :visible.sync="editDialogVisible" width="30rem">
     <div style="width: 100%;position: relative;">	
@@ -71,17 +52,6 @@
           <el-form-item label="文件名称">
             <el-input v-model="forms.name" placeholder=""></el-input>
           </el-form-item>
-         <el-form-item label="选择类型">
-            <el-select v-model="forms.type" placeholder="请选择">
-              <el-option
-                v-for="item in typeoptions"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value">
-              </el-option>
-            </el-select>
-          </el-form-item>
-         
         </el-form>
     </div>
     <span slot="footer" class="dialog-footer">
@@ -147,19 +117,58 @@ export default {
     this.getlist();
   },
   methods: {
+    createNewArr(tablisst) {
+      var st = [];
+      for (var a = 0; a < tablisst.length; a++) {
+        var names = tablisst[a].name;
+        if (tablisst[a].statistics.length > 0) {
+          var statisticsarr = tablisst[a].statistics;
+          var jsonsstatistic = {};
+          for (var i = 0; i < statisticsarr.length; i++) {
+            console.log(statisticsarr[i]);
+            jsonsstatistic = {
+              name: names,
+              time: statisticsarr[i].time,
+              type: statisticsarr[i].type
+            };
+            st.push(jsonsstatistic);
+          }
+        }
+      }
+      console.log(st);
+      this.tableData = st;
+    },
+    arraySpanMethod({ row, column, rowIndex, columnIndex }) {
+      if (columnIndex === 0) {
+        if (rowIndex % 2 === 0) {
+          return {
+            rowspan: 2,
+            colspan: 1
+          };
+        } else {
+          return {
+            rowspan: 0,
+            colspan: 0
+          };
+        }
+      }
+    },
     submitform() {
+      this.startTime = this.form.month[0] ? this.form.month[0] / 1000 : 0;
+      this.endTime = this.form.month[1]
+        ? this.form.month[1] / 1000
+        : 99999999999;
+      this.names = this.form.name;
       var params = {
-        endTime: this.endTime ? this.endTime * 1000 : 99999999999,
-        export: "1",
+        endTime: this.endTime,
+        export: "2",
         file: this.forms.name,
-        name: this.names,
-        pageNum: this.pageNum,
-        pageSize: this.pageSize,
-        startTime: this.startTime ? this.startTime * 1000 : 0,
-        type: this.forms.type
+        startTime: this.startTime
       };
       this.axios
-        .post("/find/export", params, { responseType: "arraybuffer" })
+        .post("/find/statistical_export", params, {
+          responseType: "arraybuffer"
+        })
         .then(_res => {
           const blob = new Blob([_res.data], {
             type:
@@ -170,12 +179,14 @@ export default {
           let href = window.URL.createObjectURL(blob);
           console.log(href);
           a.href = href;
-          let _fileName = _res.headers["content-disposition"]
-            .split(";")[1]
-            .split("=")[1]
-            .split(".")[0];
+
+          console.log(_res.headers);
+          // let _fileName = _res.headers["content-disposition"]
+          //   .split(";")[1]
+          //   .split("=")[1]
+          //   .split(".")[0];
           // 文件名中有中文 则对文件名进行转码
-          a.download = decodeURIComponent(_fileName);
+          a.download = decodeURIComponent(this.forms.name);
           // 利用a标签做下载
           document.body.appendChild(a);
           a.click();
@@ -229,6 +240,8 @@ export default {
       this.endTime = 99999999999;
       this.startTime = 0;
       this.form.month = "";
+      this.form.name = "";
+      this.form.type = "";
       this.getlist();
     },
     submitEditCover() {
@@ -239,26 +252,24 @@ export default {
       this.editDialogVisible = false;
     },
     onSubmit() {
-      this.startTime =
-        this.form.month[0] / 1000 ? this.form.month[0] / 1000 : 0;
-      this.endTime =
-        this.form.month[1] / 1000 ? this.form.month[1] / 1000 : 99999999999;
-      this.names = this.form.name;
+      console.log(this.form.month[1]);
+      this.startTime = this.form.month[0] ? this.form.month[0] / 1000 : 0;
+      this.endTime = this.form.month[1]
+        ? this.form.month[1] / 1000
+        : 99999999999;
       this.getlist();
     },
     getlist() {
       var params = {
-        pageNum: this.currentPage,
-        pageSize: this.pageSize,
         endTime: this.endTime,
-        startTime: this.startTime,
-        name: this.names
+        startTime: this.startTime
       };
       this.axios
-        .post("/find/find_student", params)
+        .post("/find/statistical", params)
         .then(res => {
-          console.log(res);
-          this.tableData = res.data.data.list;
+          this.tableData = res.data.data;
+          console.log(this.tableData);
+          this.createNewArr(this.tableData);
           this.total = res.data.data.total;
         })
         .catch(err => {

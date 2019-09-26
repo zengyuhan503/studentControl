@@ -110,7 +110,7 @@ export default {
         },
         {
           value: "1",
-          label: "课时"
+          label: "主课"
         },
         {
           value: "2",

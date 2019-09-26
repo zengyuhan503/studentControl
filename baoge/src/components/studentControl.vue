@@ -17,7 +17,7 @@
       <el-table-column  prop="state" label="状态" > </el-table-column>
       <el-table-column
         prop="classHour"
-        label="所剩课时次数（次数）"
+        label="所剩主课次数（次数）"
       >
       </el-table-column>
       <el-table-column
@@ -32,7 +32,7 @@
     >
         <template slot-scope="scope">
           <!-- <el-button @click="handleClick(scope.row)" type="primary" size="small">添加头像</el-button> -->
-          <el-button type="info" @click="pushrotu(scope.row)" size="small">课时管理</el-button>
+          <el-button type="info" @click="pushrotu(scope.row)" size="small">主课管理</el-button>
           <el-button type="info" @click="pushrotu2(scope.row)" size="small">陪练课管理</el-button>
           <el-button type="danger" @click="handfreeze(scope.row)" size="small">冻结账户</el-button>
         </template>

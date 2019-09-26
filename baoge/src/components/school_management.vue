@@ -3,13 +3,13 @@
        <div class="setGetAppPoolList">
             <el-row :gutter="0" class="formCont">
                 <el-col :span="24" :push="0">
-                    <h3>课时管理列表：</h3>
+                    <h3>主课管理列表：</h3>
                 </el-col>
                 <el-col :span="10" :push="0">
                 <el-breadcrumb separator-class="el-icon-arrow-right">
                     <el-breadcrumb-item >首页</el-breadcrumb-item>
                     <el-breadcrumb-item :to="{ path: '/studentControl' }">学生信息列表</el-breadcrumb-item>
-                    <el-breadcrumb-item>课时管理列表</el-breadcrumb-item>
+                    <el-breadcrumb-item>主课管理列表</el-breadcrumb-item>
                 </el-breadcrumb>
                 </el-col>
             </el-row>
