@@ -53,7 +53,7 @@
 
     <div class="block">
       <el-pagination @current-change="handleCurrentChange" :current-page.sync="currentPage" layout="prev, pager, next"
-        :page-size="pageSize" :hide-on-single-page="true" :total="total"></el-pagination>
+        :page-size="pageSize" :hide-on-single-page="true" :page-count="total"></el-pagination>
     </div>
 
   </div>
@@ -98,8 +98,8 @@
         form: {},
         tableData: [],
         pageNum: 0,
-        pageSize: 10,
-        total: 10,
+        pageSize: 7,
+        total: 7,
         payrow: "",
         currentPage: 1,
         options: {},
@@ -218,7 +218,7 @@
           .then(res => {
             console.log(res);
             this.tableData = res.data.list;
-            this.total = res.data.total;
+            this.total = res.data.totalPage;
           })
           .catch(err => {
             console.error(err);

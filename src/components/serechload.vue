@@ -141,10 +141,10 @@
                 },
                 tableData: [],
                 pageNum: 0,
-                pageSize: 10,
-                total: 10,
+                pageSize: 7,
+                total: 7,
                 payrow: "",
-                download_total:"0",
+                download_total: "0",
                 currentPage: 1,
                 options: [
                     {
@@ -237,6 +237,7 @@
                 }
                 var params = {
                     page: this.currentPage,
+                    limit: this.pageSize,
                     times: timess[0] + "~" + timess[1],
                     category: this.form.value
                 };
@@ -250,7 +251,7 @@
                         this.run_number = res.data.run_number;
                         this.terminal_number = res.data.terminal_number;
                         this.tableData = res.data.list;
-                        this.total = res.data.total;
+                        this.total = res.data.totalPage;
                         console.log(this.tableData);
                     })
                     .catch(err => {

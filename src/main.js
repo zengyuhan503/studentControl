@@ -26,10 +26,13 @@ axios.interceptors.request.use(config => {
 });
 axios.interceptors.response.use(
   response => {
-    // var code = response.data.code;
-    // if (code !== 200) {
-    //   ElementUI.Message.error(response.data.msg)
-    // }
+
+    var code = response.data.code;
+    console.log(code)
+    if (code == 405) {
+      ElementUI.Message.error(response.data.msg)
+      router.push('/loginpage');
+    }
     return response;
   },
   err => {

@@ -88,7 +88,7 @@
     </el-table>
     <div class="block">
       <el-pagination @current-change="handleCurrentChange" :current-page.sync="currentPage" layout="prev, pager, next"
-        :page-size="pageSize" :hide-on-single-page="true" :total="total"></el-pagination>
+        :page-size="pageSize" :hide-on-single-page="true" :page-count="total"></el-pagination>
     </div>
 
   </div>
@@ -101,8 +101,8 @@
         form: {},
         tableData: [],
         pageNum: 0,
-        pageSize: 10,
-        total: 10,
+        pageSize: 7,
+        total:7,
         payrow: "",
         currentPage: 1,
         dialogTableVisible: false,
@@ -188,7 +188,7 @@
             // "total_price": 0,
             // "online": 0,
             this.tableData = res.data.list;
-            this.total = res.data.list.total;
+            this.total = res.data.totalPage;
             this.todayprocess = res.data.today_pro; //今天进程
             this.yesprocess = res.data.total_pro; //昨天进程
             this.totalchannel = res.data.total_price; //总渠道

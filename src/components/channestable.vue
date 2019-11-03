@@ -27,7 +27,7 @@
                   执行数({{titles}})
                 </p>
                 <p class="nums">
-                 {{total_follow}}
+                  {{total_follow}}
                 </p>
               </li>
 
@@ -128,9 +128,9 @@
         <el-table-column type="selection" width="55">
         </el-table-column>
         <el-table-column prop="id" label="qid"> </el-table-column>
-        <el-table-column prop="magnitude" label="权重"> </el-table-column>
-        <el-table-column prop="contact" label="业务QQ"> </el-table-column>
-        <el-table-column prop="weights" label="量级"> </el-table-column>
+        <el-table-column prop="weights" label="权重"> </el-table-column>
+        <el-table-column prop="contact" label="昵称/id"> </el-table-column>
+        <el-table-column prop="magnitude" label="量级"> </el-table-column>
         <el-table-column prop="totalbusin" label="今日关注数（兴趣）"> </el-table-column>
         <el-table-column prop="todayrepeatbusin" label="今重关注数（兴趣）"></el-table-column>
         <el-table-column prop="status" label="状态"></el-table-column>
@@ -150,10 +150,9 @@
         <el-table-column type="selection" width="55">
         </el-table-column>
         <el-table-column prop="id" label="qid"> </el-table-column>
-        <el-table-column prop="magnitude" label="权重"> </el-table-column>
+        <el-table-column prop="weights" label="权重"> </el-table-column>
         <el-table-column prop="contact" label="业务QQ"> </el-table-column>
-
-        <el-table-column prop="weights" label="量级"> </el-table-column>
+        <el-table-column prop="magnitude" label="量级"> </el-table-column>
         <el-table-column prop="totalbusin" label="今日关注数（达人）"> </el-table-column>
         <el-table-column prop="todayrepeatbusin" label="今重关注数（达人）"></el-table-column>
         <el-table-column prop="status" label="状态"></el-table-column>
@@ -174,10 +173,9 @@
         <el-table-column type="selection" width="55">
         </el-table-column>
         <el-table-column prop="id" label="qid"> </el-table-column>
-        <el-table-column prop="magnitude" label="权重"> </el-table-column>
+        <el-table-column prop="weights" label="权重"> </el-table-column>
         <el-table-column prop="contact" label="业务QQ"> </el-table-column>
-
-        <el-table-column prop=" weights" label="量级"> </el-table-column>
+        <el-table-column prop="magnitude" label="量级"> </el-table-column>
         <el-table-column prop="totalbusin" label="今日关注数（认证）"> </el-table-column>
         <el-table-column prop="todayrepeatbusin" label="今重关注数（认证）"></el-table-column>
         <el-table-column prop="status" label="状态"></el-table-column>
@@ -197,10 +195,9 @@
         <el-table-column type="selection" width="55">
         </el-table-column>
         <el-table-column prop="id" label="qid"> </el-table-column>
-        <el-table-column prop="magnitude" label="权重"> </el-table-column>
+        <el-table-column prop="weights" label="权重"> </el-table-column>
         <el-table-column prop="contact" label="业务QQ"> </el-table-column>
-
-        <el-table-column prop=" weights" label="量级"> </el-table-column>
+        <el-table-column prop="magnitude" label="量级"> </el-table-column>
         <el-table-column prop="totalbusin" label="今日关注数（校园）"> </el-table-column>
         <el-table-column prop="todayrepeatbusin" label="今重关注数（校园）"></el-table-column>
         <el-table-column prop="status" label="状态"></el-table-column>
@@ -220,10 +217,9 @@
         <el-table-column type="selection" width="55">
         </el-table-column>
         <el-table-column prop="id" label="qid"> </el-table-column>
-        <el-table-column prop="magnitude" label="权重"> </el-table-column>
-        <el-table-column prop="contact" label="业务yy"> </el-table-column>
-
-        <el-table-column prop="weights" label="量级"> </el-table-column>
+        <el-table-column prop="weights" label="权重"> </el-table-column>
+        <el-table-column prop="contact" label="业务YY"> </el-table-column>
+        <el-table-column prop="magnitude" label="量级"> </el-table-column>
         <el-table-column prop="totalbusin" label="今日关注数（yy）"> </el-table-column>
         <el-table-column prop="todayrepeatbusin" label="今重关注数（yy）"></el-table-column>
         <el-table-column prop="status" label="状态"></el-table-column>
@@ -242,9 +238,9 @@
         <el-table-column type="selection" width="55">
         </el-table-column>
         <el-table-column prop="id" label="qid"> </el-table-column>
-        <el-table-column prop="magnitude" label="权重"> </el-table-column>
-        <el-table-column prop="contact" label="业务cc"> </el-table-column>
-        <el-table-column prop="weights" label="量级"> </el-table-column>
+        <el-table-column prop="weights" label="权重"> </el-table-column>
+        <el-table-column prop="contact" label="业务CC"> </el-table-column>
+        <el-table-column prop="magnitude" label="量级"> </el-table-column>
         <el-table-column prop="totalbusin" label="今日关注数（cc）"> </el-table-column>
         <el-table-column prop="todayrepeatbusin" label="今重关注数（cc）"></el-table-column>
         <el-table-column prop="status" label="状态"></el-table-column>
@@ -263,9 +259,12 @@
         <el-table-column type="selection" width="55">
         </el-table-column>
         <el-table-column prop="id" label="qid"> </el-table-column>
-        <el-table-column prop="magnitude" label="权重"> </el-table-column>
+        <el-table-column prop="weights" label="权重"> </el-table-column>
         <el-table-column prop="contact" label="评论内容"> </el-table-column>
-        <el-table-column prop="weights" label="量级"> </el-table-column>
+        <el-table-column prop="magnitude" label="量级"> </el-table-column>
+        <!-- <el-table-column prop="magnitude" label="权重"> </el-table-column>
+        <el-table-column prop="contact" label="评论内容"> </el-table-column>
+        <el-table-column prop="weights" label="量级"> </el-table-column> -->
         <el-table-column prop="totalbusin" label="今日评论数（评论）"> </el-table-column>
         <el-table-column prop="todayrepeatbusin" label="今重评论数（评论）"></el-table-column>
         <el-table-column prop="status" label="状态"></el-table-column>
@@ -286,19 +285,19 @@
           </el-table-column>
           <el-table-column prop="ab_id" label="默认编号"> </el-table-column>
           <template v-if="category==1">
-            <el-table-column prop="ab_contact" label="昵称/ID"> </el-table-column>
+            <el-table-column prop="ab_contact" label="昵称/ID"></el-table-column>
           </template>
           <template v-if="category==5">
-            <el-table-column prop="ab_contact" label="YY/昵称"> </el-table-column>
+            <el-table-column prop="ab_contact" label="YY/昵称"></el-table-column>
           </template>
           <template v-if="category==6">
-            <el-table-column prop="ab_contact" label="CC/昵称"> </el-table-column>
+            <el-table-column prop="ab_contact" label="CC/昵称"></el-table-column>
           </template>
           <template v-if="category==2||category==3||category==4">
-            <el-table-column prop="ab_contact" label="业务QQ"> </el-table-column>
+            <el-table-column prop="ab_contact" label="业务QQ"></el-table-column>
           </template>
           <template v-if="category==7">
-            <el-table-column prop="ab_contact" label="评论内容"> </el-table-column>
+            <el-table-column prop="ab_contact" label="评论内容"></el-table-column>
           </template>
           <el-table-column prop="ab_magnitude" label="量级"> </el-table-column>
           <el-table-column prop="ab_weights" label="权重"> </el-table-column>
@@ -326,7 +325,7 @@
     </el-dialog>
     <div class="block">
       <el-pagination @current-change="handleCurrentChange" :current-page.sync="currentPage" layout="prev, pager, next"
-        :page-size="pageSize" :hide-on-single-page="true" :total="total"></el-pagination>
+        :page-size="pageSize" :hide-on-single-page="true" :page-count="total"></el-pagination>
     </div>
 
   </div>
@@ -346,8 +345,8 @@
         busiselectionlist: [],
         tableData: [],
         pageNum: 0,
-        pageSize: 10,
-        total: 10,
+        pageSize: 7,
+        total: 7,
         payrow: "",
         currentPage: 1,
         options: [
@@ -392,7 +391,7 @@
         todaybusin: "",
         total_follow: "",
         totalpage: "",
-        yesbusin: "",
+        yesbusin: ""
       };
     },
     mounted() {
@@ -402,26 +401,27 @@
     },
     methods: {
       getbusinesslist() {
-        this.setCurrentStati = true
+        this.setCurrentStati = true;
         var params = {
           page: 1,
           limit: "10000",
           category: this.form.category
         };
-        this.axios.get("/public/index.php/businLists", {
-          params: params
-        })
+        this.axios
+          .get("/public/index.php/channelRelaBusin", {
+            params: params
+          })
           .then(res => {
-            console.log(res)
+            console.log(res);
             this.setCurrentStati = false;
             // this.category = this.form.category;
             this.businesstable = res.data.list.data;
             this.editDialogVisible = true;
-            console.log( this.businesstable)
+            console.log(this.businesstable);
           })
           .catch(err => {
             console.error(err);
-          })
+          });
       },
       getchannelStati() {
         var rows = this.$refs.ChangeTable.selection;
@@ -431,16 +431,17 @@
           return false;
         }
         for (var a = 0; a < rows.length; a++) {
-          this.busiselectionlist.push(rows[a].id)
-        };
+          this.busiselectionlist.push(rows[a].id);
+        }
         this.channelStati = true;
         var params = {
           page: 1,
-          limit: "10000",
+          limit: "10000"
         };
-        this.axios.get("/public/index.php/channelStati", {
-          params: params
-        })
+        this.axios
+          .get("/public/index.php/channelStati", {
+            params: params
+          })
           .then(res => {
             this.channelStati = false;
             this.channelselectlist = res.data.list;
@@ -448,105 +449,111 @@
           })
           .catch(err => {
             console.error(err);
-          })
+          });
       },
       submitmirrorChannel() {
         var rows = this.$refs.channellists.selection;
-        console.log(rows)
+        console.log(rows);
         if (rows.length == 0) {
           this.$message.error("请选择渠道");
           return false;
         }
-        var list = []
+        var list = [];
         for (var a = 0; a < rows.length; a++) {
-          list.push(rows[a].number)
-        };
-        console.log(list, this.busiselectionlist)
-        this.$confirm('你确定要让选择的业务镜像到选择的渠道吗, 是否继续?', '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-          type: 'warning'
-        }).then(() => {
-          var params = {
-            bids: this.busiselectionlist.join(","),
-            cid: list.join(',')
+          list.push(rows[a].number);
+        }
+        console.log(list, this.busiselectionlist);
+        this.$confirm(
+          "你确定要让选择的业务镜像到选择的渠道吗, 是否继续?",
+          "提示",
+          {
+            confirmButtonText: "确定",
+            cancelButtonText: "取消",
+            type: "warning"
           }
-          this.axios.get("/public/index.php/oneKeyImage", { params: params })
-            .then(res => {
-              var code = res.data.code;
+        )
+          .then(() => {
+            var params = {
+              bids: this.busiselectionlist.join(","),
+              cid: list.join(",")
+            };
+            this.axios
+              .get("/public/index.php/oneKeyImage", { params: params })
+              .then(res => {
+                var code = res.data.code;
 
-              if (code !== 200) {
-                this.$message.error(res.data.msg);
-                return false;
-              };
-              this.channelselect = false;
-              this.$message({
-                type: 'success',
-                message: res.data.msg
+                if (code !== 200) {
+                  this.$message.error(res.data.msg);
+                  return false;
+                }
+                this.channelselect = false;
+                this.$message({
+                  type: "success",
+                  message: res.data.msg
+                });
+              })
+              .catch(err => {
+                console.error(err);
               });
-            })
-            .catch(err => {
-              console.error(err);
-            })
-
-        }).catch(() => {
-          this.$message({
-            type: 'info',
-            message: '已取消关联'
+          })
+          .catch(() => {
+            this.$message({
+              type: "info",
+              message: "已取消关联"
+            });
           });
-        });
       },
       submitpost() {
         var rows = this.$refs.multipleTable.selection;
-        console.log(rows)
+        console.log(rows);
         if (rows.length == 0) {
           this.$message.error("请选择业务");
           return false;
         }
-        var list = []
+        var list = [];
         for (var a = 0; a < rows.length; a++) {
-          list.push(rows[a].id)
-        };
-        console.log(list)
-        this.$confirm('你确定要让选择的业务关联到当前渠道吗, 是否继续?', '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-          type: 'warning'
-        }).then(() => {
-          var params = {
-            channel: this.channel_name,
-            bids: list.join(',')
-          }
-          this.axios.get("/public/index.php/setBusin", { params: params })
-            .then(res => {
-              var code = res.data.code;
+          list.push(rows[a].ab_id);
+        }
+        console.log(list);
+        this.$confirm("你确定要让选择的业务关联到当前渠道吗, 是否继续?", "提示", {
+          confirmButtonText: "确定",
+          cancelButtonText: "取消",
+          type: "warning"
+        })
+          .then(() => {
+            var params = {
+              channel: this.channel_name,
+              bids: list.join(",")
+            };
+            this.axios
+              .get("/public/index.php/setBusin", { params: params })
+              .then(res => {
+                var code = res.data.code;
 
-              if (code !== 200) {
-
-                this.$message.error(res.data.msg);
-                return false;
-              }
-              this.editDialogVisible = false;
-              this.getstudentlist()
-              this.$message({
-                type: 'success',
-                message: res.data.msg
+                if (code !== 200) {
+                  this.$message.error(res.data.msg);
+                  return false;
+                }
+                this.editDialogVisible = false;
+                this.getstudentlist();
+                this.$message({
+                  type: "success",
+                  message: res.data.msg
+                });
+              })
+              .catch(err => {
+                console.error(err);
               });
-            })
-            .catch(err => {
-              console.error(err);
-            })
-
-        }).catch(() => {
-          this.$message({
-            type: 'info',
-            message: '已取消关联'
+          })
+          .catch(() => {
+            this.$message({
+              type: "info",
+              message: "已取消关联"
+            });
           });
-        });
       },
       setCurrent() {
-        this.getbusinesslist()
-
+        this.getbusinesslist();
       },
       setcope() { },
       setdelete() {
@@ -560,80 +567,84 @@
         //   list.push(rows[a].id)
         // };
         // console.log(list)
-        this.deletebuis()
+        this.deletebuis();
       },
       deletebuis(list) {
-        this.$confirm('你确定要删除业务, 是否继续?', '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-          type: 'warning'
-        }).then(() => {
-          var params = {
-            cid: this.channelId
-          }
-          this.axios.get("/public/index.php/businDels", { params: params })
-            .then(res => {
-              var code = res.data.code;
-              if (code !== 200) {
-
-                this.$message.error(res.data.msg);
-                return false;
-              }
-              this.getstudentlist()
-              this.$message({
-                type: 'success',
-                message: res.data.msg
+        this.$confirm("你确定要删除业务, 是否继续?", "提示", {
+          confirmButtonText: "确定",
+          cancelButtonText: "取消",
+          type: "warning"
+        })
+          .then(() => {
+            var params = {
+              cid: this.channelId
+            };
+            this.axios
+              .get("/public/index.php/businDels", { params: params })
+              .then(res => {
+                var code = res.data.code;
+                if (code !== 200) {
+                  this.$message.error(res.data.msg);
+                  return false;
+                }
+                this.getstudentlist();
+                this.$message({
+                  type: "success",
+                  message: res.data.msg
+                });
+              })
+              .catch(err => {
+                console.error(err);
               });
-            })
-            .catch(err => {
-              console.error(err);
-            })
-
-        }).catch(() => {
-          this.$message({
-            type: 'info',
-            message: '已取消关联'
+          })
+          .catch(() => {
+            this.$message({
+              type: "info",
+              message: "已取消关联"
+            });
           });
-        });
       },
       handleSelectionChange(val) {
         this.multipleSelection = val;
       },
       handleClickinfo(row) {
-        console.log(row.id)
-        this.$confirm('你确定要删除业务, 是否继续?', '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-          type: 'warning'
-        }).then(() => {
-          var params = {
-            ids: row.id
-          }
-          this.axios.get("/public/index.php/delBusin", { params: params })
-            .then(res => {
-              var code = res.data.code;
-              
-              this.getstudentlist()
-              if (code !== 200) {
-                this.$message.error(res.data.msg);
-                return false;
-              }
-              this.getstudentlist()
-              this.$message({
-                type: 'success',
-                message: "删除成功"
-              });
-            })
-            .catch(err => {
-              console.error(err);
-            })
+        console.log(row.id);
+        this.$confirm("你确定要删除业务, 是否继续?", "提示", {
+          confirmButtonText: "确定",
+          cancelButtonText: "取消",
+          type: "warning"
+        })
+          .then(() => {
+            var params = {
+              cid: this.channelId,
+              bid: row.id,
+            };
+            this.axios
+              .get("/public/index.php/businOneDels", { params: params })
+              .then(res => {
+                var code = res.data.code;
 
-        }).catch(() => {
-          this.$message({
-            type: 'info',
-            message: '取消删除'
+                this.getstudentlist();
+                if (code !== 200) {
+                  this.$message.error(res.data.msg);
+                  return false;
+                }
+                this.getstudentlist();
+                this.$message({
+                  type: "success",
+                  message: "删除成功"
+                });
+              })
+              .catch(err => {
+                console.error(err);
+              });
+          })
+          .catch(() => {
+            this.$message({
+              type: "info",
+              message: "取消删除"
+            });
           });
-        });
       },
       onSubmit() {
         this.category = this.form.category;
@@ -707,14 +718,14 @@
               return false;
             }
             this.tableData = res.data.list;
-            this.total = res.data.list.total;
+            this.total = res.data.totalPage;
             this.totile = res.data;
             this.today_follow = res.today_follow;
             this.todaybusin = res.data.todaybusin;
             this.total_follow = res.data.total_follow;
             this.totalpage = res.data.totalpage;
             this.yesbusin = res.data.yesbusin;
-            console.log(this.today_follow)
+            console.log(this.today_follow);
           })
           .catch(err => {
             console.error(err);

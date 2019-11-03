@@ -169,206 +169,207 @@
     </el-dialog>
     <div class="block">
       <el-pagination @current-change="handleCurrentChange" :current-page.sync="currentPage" layout="prev, pager, next"
-        :page-size="pageSize" :hide-on-single-page="true" :total="total"></el-pagination>
+        :page-size="pageSize" :hide-on-single-page="true" :page-count="total"></el-pagination>
     </div>
   </div>
 </template>
 
 <script>
-  export default {
-    data() {
-      return {
-        gridData: [],
-        pickerOptions: {
-          disabledDate(time) {
-            return time.getTime() > Date.now();
-          },
-          shortcuts: [
-            {
-              text: "今天",
-              onClick(picker) {
-                picker.$emit("pick", new Date());
-              }
-            },
-            {
-              text: "昨天",
-              onClick(picker) {
-                const date = new Date();
-                date.setTime(date.getTime() - 3600 * 1000 * 24);
-                picker.$emit("pick", date);
-              }
-            },
-            {
-              text: "一周前",
-              onClick(picker) {
-                const date = new Date();
-                date.setTime(date.getTime() - 3600 * 1000 * 24 * 7);
-                picker.$emit("pick", date);
-              }
+export default {
+  data() {
+    return {
+      gridData: [],
+      pickerOptions: {
+        disabledDate(time) {
+          return time.getTime() > Date.now();
+        },
+        shortcuts: [
+          {
+            text: "今天",
+            onClick(picker) {
+              picker.$emit("pick", new Date());
             }
-          ]
-        },
-        form: {
-          category: 1
-        },
-        dialogTableVisible: false,
-        tableData: [],
-        pageNum: 0,
-        pageSize: 10,
-        total: 10,
-        payrow: "",
-        currentPage: 1,
-        options: [
-          {
-            value: 1,
-            label: "兴趣部落"
           },
           {
-            value: 2,
-            label: "空间认证"
+            text: "昨天",
+            onClick(picker) {
+              const date = new Date();
+              date.setTime(date.getTime() - 3600 * 1000 * 24);
+              picker.$emit("pick", date);
+            }
           },
           {
-            value: 3,
-            label: "空间达人"
-          },
-          {
-            value: 4,
-            label: "校园达人"
-          },
-          {
-            value: 5,
-            label: "yy直播"
-          },
-          {
-            value: 6,
-            label: "cc直播"
-          },
-          {
-            value: 7,
-            label: "部落评论"
+            text: "一周前",
+            onClick(picker) {
+              const date = new Date();
+              date.setTime(date.getTime() - 3600 * 1000 * 24 * 7);
+              picker.$emit("pick", date);
+            }
           }
-        ],
-        category: "1",
-        daylist: {
-          "tribe": "0/14", //兴趣部落（日）
-          "auth": "0/9", //空间认证（日）
-          "daren": "0/12",// 空间达人（日）
-          "school": "0/7", //校园达人（日）
-          "yy": "0/11", //yy直播（日）
-          "cc": "0/9", //cc直播（日）
-          "comment": "0/10", //部落评论（日）
+        ]
+      },
+      form: {
+        category: 1
+      },
+      dialogTableVisible: false,
+      tableData: [],
+      pageNum: 0,
+      pageSize: 7,
+      total: 7,
+      payrow: "",
+      currentPage: 1,
+      options: [
+        {
+          value: 1,
+          label: "兴趣部落"
         },
-        totallist: {
-          "tribe_total": "0", //兴趣部落（总）
-          "auth_total": "0",//空间认证（总）
-          "daren_total": "0",// 空间达人（总）
-          "school_total": "0",//校园达人（总）
-          "yy_total": "0",//yy直播（总）
-          "cc_total": "0", //cc直播（总）
-          "comment_total": "0",//部落评论（总）
+        {
+          value: 2,
+          label: "空间认证"
+        },
+        {
+          value: 3,
+          label: "空间达人"
+        },
+        {
+          value: 4,
+          label: "校园达人"
+        },
+        {
+          value: 5,
+          label: "yy直播"
+        },
+        {
+          value: 6,
+          label: "cc直播"
+        },
+        {
+          value: 7,
+          label: "部落评论"
         }
+      ],
+      category: "1",
+      daylist: {
+        tribe: "0/14", //兴趣部落（日）
+        auth: "0/9", //空间认证（日）
+        daren: "0/12", // 空间达人（日）
+        school: "0/7", //校园达人（日）
+        yy: "0/11", //yy直播（日）
+        cc: "0/9", //cc直播（日）
+        comment: "0/10" //部落评论（日）
+      },
+      totallist: {
+        tribe_total: "0", //兴趣部落（总）
+        auth_total: "0", //空间认证（总）
+        daren_total: "0", // 空间达人（总）
+        school_total: "0", //校园达人（总）
+        yy_total: "0", //yy直播（总）
+        cc_total: "0", //cc直播（总）
+        comment_total: "0" //部落评论（总）
+      }
+    };
+  },
+  mounted() {
+    this.getstudentlist();
+  },
+  methods: {
+    handleClickinfo(row) {
+      var params = {
+        times: row.time,
+        type: 3
       };
+      this.axios
+        .get("/public/index.php/flowDetail", { params: params })
+        .then(res => {
+          this.gridData = res.data.list;
+          this.dialogTableVisible = true;
+        })
+        .catch(err => {
+          console.error(err);
+        });
     },
-    mounted() {
+    onSubmit() {
+      this.category = this.form.category;
       this.getstudentlist();
     },
-    methods: {
-      handleClickinfo(row) {
-        var params = {
-          times: row.time,
-          category: this.category
-        };
-        this.axios.get("/public/index.php/flowDetail", { params: params })
-          .then(res => {
-            this.gridData = res.data.list;
-            this.dialogTableVisible = true;
-          }).catch(err => {
-            console.error(err);
-          });
-      },
-      onSubmit() {
-        this.category = this.form.category;
-        this.getstudentlist()
-      },
-      resetSearch() {
-        this.form.category = 1
-        this.category = this.form.category;
-        this.getstudentlist()
-        this.form.month = "";
-      },
+    resetSearch() {
+      this.form.category = 1;
+      this.category = this.form.category;
+      this.getstudentlist();
+      this.form.month = "";
+    },
 
-      add0(m) {
-        return m < 10 ? "0" + m : m;
-      },
-      format(shijianchuo) {
-        var shijianchuo = shijianchuo * 1000;
-        //shijianchuo是整数，否则要parseInt转换
-        var time = new Date(shijianchuo);
+    add0(m) {
+      return m < 10 ? "0" + m : m;
+    },
+    format(shijianchuo) {
+      var shijianchuo = shijianchuo * 1000;
+      //shijianchuo是整数，否则要parseInt转换
+      var time = new Date(shijianchuo);
 
-        var y = time.getFullYear();
-        var m = time.getMonth() + 1;
-        var d = time.getDate();
-        var h = time.getHours();
-        var mm = time.getMinutes();
-        var s = time.getSeconds();
-        return (
-          y +
-          "-" +
-          this.add0(m) +
-          "-" +
-          this.add0(d) +
-          " " +
-          this.add0(h) +
-          ":" +
-          this.add0(mm) +
-          ":" +
-          this.add0(s)
-        );
-      },
-      handleCurrentChange(val) {
-        this.currentPage = val;
-        this.getstudentlist();
-      },
+      var y = time.getFullYear();
+      var m = time.getMonth() + 1;
+      var d = time.getDate();
+      var h = time.getHours();
+      var mm = time.getMinutes();
+      var s = time.getSeconds();
+      return (
+        y +
+        "-" +
+        this.add0(m) +
+        "-" +
+        this.add0(d) +
+        " " +
+        this.add0(h) +
+        ":" +
+        this.add0(mm) +
+        ":" +
+        this.add0(s)
+      );
+    },
+    handleCurrentChange(val) {
+      this.currentPage = val;
+      this.getstudentlist();
+    },
 
-      getstudentlist() {
-        var params = {
-          page: this.currentPage,
-          category: this.category
-        };
-        this.axios
-          .get("/public/index.php/statiFlowMonth", { params: params })
-          .then(res => {
-
-            this.tableData = res.data.list;
-            console.log(this.tableData);
-            this.total = res.data.total;
-            this.daylist = res.data;
-            this.totallist = res.data;
-          })
-          .catch(err => {
-            console.error(err);
-          });
-      }
+    getstudentlist() {
+      var params = {
+        page: this.currentPage,
+        category: this.category
+      };
+      this.axios
+        .get("/public/index.php/statiFlowMonth", { params: params })
+        .then(res => {
+          this.tableData = res.data.list;
+          console.log(this.tableData);
+          this.total = res.data.totalPage;
+          this.daylist = res.data;
+          this.totallist = res.data;
+        })
+        .catch(err => {
+          console.error(err);
+        });
     }
-  };
+  }
+};
 </script>
 <style lang="">
-  .titile {
-    font-size: 14px;
-    color: #928282;
-  }
+.titile {
+  font-size: 14px;
+  color: #928282;
+}
 
-  .nums {
-    color: #e89c4b;
-    font-size: 18px;
-    line-height: 25px;
-    margin: 0;
-    font-weight: 600;
-  }
+.nums {
+  color: #e89c4b;
+  font-size: 18px;
+  line-height: 25px;
+  margin: 0;
+  font-weight: 600;
+}
 
-  .listflow li {
-    float: left;
-    margin: 0 9px;
-    text-align: center;
-  }
+.listflow li {
+  float: left;
+  margin: 0 9px;
+  text-align: center;
+}
 </style>

@@ -78,7 +78,7 @@
                   今日需支付
                 </p>
                 <p class="nums">
-                  100
+                  {{money}}
                 </p>
               </li>
             </ul>
@@ -199,7 +199,7 @@
     </el-dialog>
     <div class="block">
       <el-pagination @current-change="handleCurrentChange" :current-page.sync="currentPage" layout="prev, pager, next"
-        :page-size="pageSize" :total="total"></el-pagination>
+        :page-size="pageSize" :hide-on-single-page="true" :page-count="total"></el-pagination>
     </div>
 
     <!-- <el-dialog title="出量概率详情" :visible.sync="dialogTableVisible">
@@ -238,7 +238,7 @@ export default {
       editDialogVisible2: false,
       isEditUploading: false,
       editDialogVisible: false,
-
+      money: "",
       form: {},
       tableData: [],
       pageNum: 0,
@@ -293,7 +293,7 @@ export default {
       this.axios
         .get("/public/index.php/updateChannels", { params: parms })
         .then(res => {
-            var code = res.data.code;
+          var code = res.data.code;
           console.log(res);
           if (code !== 200) {
             this.$message.error(res.data.msg);
@@ -316,7 +316,7 @@ export default {
       this.axios
         .get("/public/index.php/addChannels", { params: parms })
         .then(res => {
-            var code = res.data.code;
+          var code = res.data.code;
           if (code !== 200) {
             this.$message.error(res.data.msg);
             return false;
@@ -507,7 +507,7 @@ export default {
         .then(res => {
           console.log(res);
           this.tableData = res.data.list;
-          this.total = res.data.total;
+          this.total = res.data.totalPage;
           console.log(this.total);
           this.todayprocess = res.data.todayprocess; //今天进程
           this.yesprocess = res.data.yesprocess; //昨天进程
@@ -515,6 +515,7 @@ export default {
           this.channel_active = res.data.channel_active; //活跃渠道
           this.todayterminal = res.data.todayterminal; //今日终端
           this.yesterminal = res.data.yesterminal; //昨日终端
+          this.money = res.data.money;
         })
         .catch(err => {
           console.error(err);

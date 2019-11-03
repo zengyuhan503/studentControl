@@ -106,7 +106,7 @@
 
         <div class="block">
             <el-pagination @current-change="handleCurrentChange" :current-page.sync="currentPage"
-                layout="prev, pager, next" :page-size="pageSize" :hide-on-single-page="true" :total="total">
+                layout="prev, pager, next" :page-size="pageSize" :hide-on-single-page="true" :page-count="total">
             </el-pagination>
         </div>
     </div>
@@ -155,8 +155,8 @@
                 dialogTableVisible: false,
                 tableData: [],
                 pageNum: 0,
-                pageSize: 10,
-                total: 10,
+                pageSize: 7,
+                total: 7,
                 payrow: "",
                 currentPage: 1,
                 options: [
@@ -264,6 +264,7 @@
                 }
                 var params = {
                     page: this.currentPage,
+                    limit: this.pageSize,
                     times: this.timess[0] + "~" + this.timess[1]
                 };
                 this.axios
@@ -275,7 +276,7 @@
                         console.log(this.tableData)
                         // this.tableData = res.data.list;
                         // console.log(this.tableData);
-                        // this.total = res.data.total;
+                        this.total = res.data.totalPage;
                         // this.daylist = res.data;
                         // this.totallist = res.data;
                     })

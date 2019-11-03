@@ -81,10 +81,9 @@
             </el-table-column>
         </el-table>
         <div class="block">
-            <el-pagination @current-change="handleCurrentChange" :current-page.sync="currentPage"
-                layout="prev, pager, next" :page-size="pageSize" :hide-on-single-page="true" :total="total">
-            </el-pagination>
-        </div>
+            <el-pagination @current-change="handleCurrentChange" :current-page.sync="currentPage" layout="prev, pager, next"
+              :page-size="pageSize" :hide-on-single-page="true" :page-count="total"></el-pagination>
+          </div>
 
 
 
@@ -137,8 +136,8 @@
                 form: {},
                 tableData: [],
                 pageNum: 0,
-                pageSize: 10,
-                total: 10,
+                pageSize: 7,
+                total: 7,
                 payrow: "",
                 currentPage: 1,
                 options: [
@@ -238,7 +237,7 @@
                             total_process: data.total_process, //昨天进程
                         };
                         this.tableData = res.data.list;
-                        this.total = res.data.total;
+                        this.total = res.data.totalPage;
                     })
                     .catch(err => {
                         console.error(err);

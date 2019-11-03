@@ -16,7 +16,7 @@
     </el-table>
     <div class="block">
       <el-pagination @current-change="handleCurrentChange" :current-page.sync="currentPage" layout="prev, pager, next"
-        :page-size="pageSize" :hide-on-single-page="true" :total="total"></el-pagination>
+        :page-size="pageSize" :hide-on-single-page="true" :page-count="total"></el-pagination>
     </div>
 
   </div>
@@ -29,8 +29,8 @@
         form: {},
         tableData: [],
         pageNum: 0,
-        pageSize: 10,
-        total: 10,
+        pageSize: 8,
+        total: 15,
         payrow: "",
         currentPage: 1,
         dialogTableVisible: false,
@@ -105,7 +105,8 @@
           .get("/public/index.php/getChannel", { params: params })
           .then(res => {
             this.tableData = res.data.list;
-            this.total = res.data.data.total;
+            this.total = res.data.totalPage;
+            console.log(this.total)
           })
           .catch(err => {
             console.error(err);
