@@ -131,8 +131,8 @@
         <el-table-column prop="weights" label="权重"> </el-table-column>
         <el-table-column prop="contact" label="昵称/id"> </el-table-column>
         <el-table-column prop="magnitude" label="量级"> </el-table-column>
-        <el-table-column prop="totalbusin" label="今日关注数（兴趣）"> </el-table-column>
-        <el-table-column prop="todayrepeatbusin" label="今重关注数（兴趣）"></el-table-column>
+        <el-table-column prop="totalbusin" label="已关注总数（兴趣）"> </el-table-column>
+        <el-table-column prop="todayrepeatbusin" label="以重关注数（兴趣）"></el-table-column>
         <el-table-column prop="status" label="状态"></el-table-column>
         <el-table-column prop="remark" label="备注"></el-table-column>
         <el-table-column fixed="right" label="操作">
@@ -153,8 +153,8 @@
         <el-table-column prop="weights" label="权重"> </el-table-column>
         <el-table-column prop="contact" label="业务QQ"> </el-table-column>
         <el-table-column prop="magnitude" label="量级"> </el-table-column>
-        <el-table-column prop="totalbusin" label="今日关注数（达人）"> </el-table-column>
-        <el-table-column prop="todayrepeatbusin" label="今重关注数（达人）"></el-table-column>
+        <el-table-column prop="totalbusin" label="已关注总数（达人）"> </el-table-column>
+        <el-table-column prop="todayrepeatbusin" label="以重关注数（达人）"></el-table-column>
         <el-table-column prop="status" label="状态"></el-table-column>
         <el-table-column prop="remark" label="备注"></el-table-column>
         <el-table-column fixed="right" label="操作">
@@ -176,8 +176,8 @@
         <el-table-column prop="weights" label="权重"> </el-table-column>
         <el-table-column prop="contact" label="业务QQ"> </el-table-column>
         <el-table-column prop="magnitude" label="量级"> </el-table-column>
-        <el-table-column prop="totalbusin" label="今日关注数（认证）"> </el-table-column>
-        <el-table-column prop="todayrepeatbusin" label="今重关注数（认证）"></el-table-column>
+        <el-table-column prop="totalbusin" label="已关注总数（认证）"> </el-table-column>
+        <el-table-column prop="todayrepeatbusin" label="以重关注数（认证）"></el-table-column>
         <el-table-column prop="status" label="状态"></el-table-column>
         <el-table-column prop="remark" label="备注"></el-table-column>
         <el-table-column fixed="right" label="操作">
@@ -198,8 +198,8 @@
         <el-table-column prop="weights" label="权重"> </el-table-column>
         <el-table-column prop="contact" label="业务QQ"> </el-table-column>
         <el-table-column prop="magnitude" label="量级"> </el-table-column>
-        <el-table-column prop="totalbusin" label="今日关注数（校园）"> </el-table-column>
-        <el-table-column prop="todayrepeatbusin" label="今重关注数（校园）"></el-table-column>
+        <el-table-column prop="totalbusin" label="已关注总数（校园）"> </el-table-column>
+        <el-table-column prop="todayrepeatbusin" label="以重关注数（校园）"></el-table-column>
         <el-table-column prop="status" label="状态"></el-table-column>
         <el-table-column prop="remark" label="备注"></el-table-column>
         <el-table-column fixed="right" label="操作">
@@ -220,8 +220,8 @@
         <el-table-column prop="weights" label="权重"> </el-table-column>
         <el-table-column prop="contact" label="业务YY"> </el-table-column>
         <el-table-column prop="magnitude" label="量级"> </el-table-column>
-        <el-table-column prop="totalbusin" label="今日关注数（yy）"> </el-table-column>
-        <el-table-column prop="todayrepeatbusin" label="今重关注数（yy）"></el-table-column>
+        <el-table-column prop="totalbusin" label="已关注总数（yy）"> </el-table-column>
+        <el-table-column prop="todayrepeatbusin" label="以重关注数（yy）"></el-table-column>
         <el-table-column prop="status" label="状态"></el-table-column>
         <el-table-column prop="remark" label="备注"></el-table-column>
         <el-table-column fixed="right" label="操作">
@@ -241,8 +241,8 @@
         <el-table-column prop="weights" label="权重"> </el-table-column>
         <el-table-column prop="contact" label="业务CC"> </el-table-column>
         <el-table-column prop="magnitude" label="量级"> </el-table-column>
-        <el-table-column prop="totalbusin" label="今日关注数（cc）"> </el-table-column>
-        <el-table-column prop="todayrepeatbusin" label="今重关注数（cc）"></el-table-column>
+        <el-table-column prop="totalbusin" label="已关注总数（cc）"> </el-table-column>
+        <el-table-column prop="todayrepeatbusin" label="以重关注数（cc）"></el-table-column>
         <el-table-column prop="status" label="状态"></el-table-column>
         <el-table-column prop="remark" label="备注"></el-table-column>
         <el-table-column fixed="right" label="操作">
@@ -724,11 +724,11 @@
             this.totile = res.data;
             this.today_follow = res.data.today_follow;
             this.todaybusin = res.data.todaybusin;
-            this.total_follow = res.data.total_follow;
+            this.total_follow = res.data.imptotal;
             this.totalpage = res.data.totalpage;
             this.yesbusin = res.data.yesbusin;
-            this.totals = res.data.total;
-            this.imptotal = res.data.imptotal
+            this.totals = res.data.total_follow;
+            this.imptotal = res.data.imp_day
             console.log(this.today_follow);
           })
           .catch(err => {
