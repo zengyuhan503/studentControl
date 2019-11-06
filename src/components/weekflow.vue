@@ -276,7 +276,8 @@ export default {
     handleClickinfo(row) {
       var params = {
         times: row.time,
-        type: 2
+        type: 2,
+        category: this.form.category
       };
       this.axios
         .get("/public/index.php/flowDetail", { params: params })

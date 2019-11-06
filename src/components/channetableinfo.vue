@@ -19,7 +19,6 @@
         <el-col :span="4">
           <div class="grid-content bg-purple">
             <ul class="listflow">
-
               <li>
                 <p class="titile">
                   总进程
@@ -36,7 +35,6 @@
             <ul class="listflow">
               <li>
                 <p class="titile">
-
               <li>
                 <p class="titile">
                   总金额
@@ -45,7 +43,6 @@
                   {{totalchannel}}
                 </p>
               </li>
-
             </ul>
           </div>
         </el-col>
@@ -90,7 +87,6 @@
       <el-pagination @current-change="handleCurrentChange" :current-page.sync="currentPage" layout="prev, pager, next"
         :page-size="pageSize" :hide-on-single-page="true" :page-count="total"></el-pagination>
     </div>
-
   </div>
 </template>
 
@@ -102,35 +98,33 @@
         tableData: [],
         pageNum: 0,
         pageSize: 7,
-        total:7,
+        total: 7,
         payrow: "",
         currentPage: 1,
         dialogTableVisible: false,
         channelId: "",
-        todayprocess : "", //今天进程
-        yesprocess : '', //昨天进程
-        totalchannel :'',//总渠道
-        channel_active : '' //活跃渠道
+        todayprocess: "", //今天进程
+        yesprocess: '', //昨天进程
+        totalchannel: '',//总渠道
+        channel_active: '' //活跃渠道
       };
     },
     mounted() {
-      console.log(this.$route.query)
       this.channelId = this.$route.query.channel_name;
-
       this.getstudentlist();
     },
     methods: {
       handleinfo(row) {
+        console.log(row)
         var id = row.channel;
         var params = {
-          id: id
+          id: id,
+          times: row.times
         };
         this.$router.push({
           path: "/list",
           // name: 'mallList',
-          query: {
-            id: id
-          }
+          query: params
         });
       },
       onSubmit() { },
@@ -143,11 +137,10 @@
       add0(m) {
         return m < 10 ? "0" + m : m;
       },
-      format(shijianchuo) {
-        var shijianchuo = shijianchuo * 1000;
-        //shijianchuo是整数，否则要parseInt转换
-        var time = new Date(shijianchuo);
-
+      format(timestamp) {
+        var timestamp = timestamp * 1000;
+        //timestamp是整数，否则要parseInt转换
+        var time = new Date(timestamp);
         var y = time.getFullYear();
         var m = time.getMonth() + 1;
         var d = time.getDate();

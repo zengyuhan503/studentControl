@@ -11,7 +11,8 @@
                                     总进程数/重
                                 </p>
                                 <p class="nums">
-                                    {{channellist.terminal_process}}
+                                    {{channellist.total_process}}
+
                                 </p>
                             </li>
 
@@ -27,9 +28,8 @@
                                     总终端数/重
                                 </p>
                                 <p class="nums">
-                                    {{channellist.total_process}}
+                                    {{channellist.terminal_process}}
                                 </p>
-
                             </li>
                         </ul>
                     </div>
@@ -81,9 +81,10 @@
             </el-table-column>
         </el-table>
         <div class="block">
-            <el-pagination @current-change="handleCurrentChange" :current-page.sync="currentPage" layout="prev, pager, next"
-              :page-size="pageSize" :hide-on-single-page="true" :page-count="total"></el-pagination>
-          </div>
+            <el-pagination @current-change="handleCurrentChange" :current-page.sync="currentPage"
+                layout="prev, pager, next" :page-size="pageSize" :hide-on-single-page="true" :page-count="total">
+            </el-pagination>
+        </div>
 
 
 

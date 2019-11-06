@@ -10,9 +10,9 @@
                   今日进程数量
                 </p>
                 <p class="nums">
-                  {{today_follow}}
+                  {{todaybusin}}
                 </p>
-                <p class="flowinfos">昨日进程：{{todaybusin}}</p>
+                <p class="flowinfos">昨日进程：{{yesbusin}}</p>
               </li>
 
             </ul>
@@ -45,7 +45,7 @@
                   今日关注({{titles}})
                 </p>
                 <p class="nums">
-                  {{totalpage}}
+                  {{today_follow}}
                 </p>
               </li>
 
@@ -62,7 +62,7 @@
                   总关注({{titles}})
                 </p>
                 <p class="nums">
-                  {{yesbusin}}
+                  {{totals}}
                 </p>
               </li>
 
@@ -78,7 +78,7 @@
                   在线天数
                 </p>
                 <p class="nums">
-                  {{yesbusin}}
+                  {{imptotal}}
                 </p>
               </li>
             </ul>
@@ -379,6 +379,8 @@
             label: "部落评论"
           }
         ],
+        imptotal: "",
+        totals: "",
         multipleSelection: "",
         category: 1,
         businesstable: [],
@@ -720,11 +722,13 @@
             this.tableData = res.data.list;
             this.total = res.data.totalPage;
             this.totile = res.data;
-            this.today_follow = res.today_follow;
+            this.today_follow = res.data.today_follow;
             this.todaybusin = res.data.todaybusin;
             this.total_follow = res.data.total_follow;
             this.totalpage = res.data.totalpage;
             this.yesbusin = res.data.yesbusin;
+            this.totals = res.data.total;
+            this.imptotal = res.data.imptotal
             console.log(this.today_follow);
           })
           .catch(err => {

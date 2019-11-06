@@ -117,7 +117,7 @@
         </el-menu>
       </el-col>
       <el-col :span="21" class="mainCont">
-        <el-scrollbar>
+        <el-scrollbar  style="height:100%">
           <router-view></router-view>
         </el-scrollbar>
       </el-col>

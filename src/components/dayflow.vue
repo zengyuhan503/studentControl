@@ -175,203 +175,204 @@
 </template>
 
 <script>
-export default {
-  data() {
-    return {
-      gridData: [],
-      pickerOptions: {
-        disabledDate(time) {
-          return time.getTime() > Date.now();
+  export default {
+    data() {
+      return {
+        gridData: [],
+        pickerOptions: {
+          disabledDate(time) {
+            return time.getTime() > Date.now();
+          },
+          shortcuts: [
+            {
+              text: "今天",
+              onClick(picker) {
+                picker.$emit("pick", new Date());
+              }
+            },
+            {
+              text: "昨天",
+              onClick(picker) {
+                const date = new Date();
+                date.setTime(date.getTime() - 3600 * 1000 * 24);
+                picker.$emit("pick", date);
+              }
+            },
+            {
+              text: "一周前",
+              onClick(picker) {
+                const date = new Date();
+                date.setTime(date.getTime() - 3600 * 1000 * 24 * 7);
+                picker.$emit("pick", date);
+              }
+            }
+          ]
         },
-        shortcuts: [
+        form: {
+          category: 1
+        },
+        times: "",
+        dialogTableVisible: false,
+        tableData: [],
+        outputvol: [],
+        pageNum: 0,
+        pageSize: 7,
+        total: 7,
+        payrow: "",
+        currentPage: 1,
+        options: [
           {
-            text: "今天",
-            onClick(picker) {
-              picker.$emit("pick", new Date());
-            }
+            value: 1,
+            label: "兴趣部落"
           },
           {
-            text: "昨天",
-            onClick(picker) {
-              const date = new Date();
-              date.setTime(date.getTime() - 3600 * 1000 * 24);
-              picker.$emit("pick", date);
-            }
+            value: 2,
+            label: "空间认证"
           },
           {
-            text: "一周前",
-            onClick(picker) {
-              const date = new Date();
-              date.setTime(date.getTime() - 3600 * 1000 * 24 * 7);
-              picker.$emit("pick", date);
-            }
+            value: 3,
+            label: "空间达人"
+          },
+          {
+            value: 4,
+            label: "校园达人"
+          },
+          {
+            value: 5,
+            label: "yy直播"
+          },
+          {
+            value: 6,
+            label: "cc直播"
+          },
+          {
+            value: 7,
+            label: "部落评论"
           }
-        ]
-      },
-      form: {
-        category: 1
-      },
-      times: "",
-      dialogTableVisible: false,
-      tableData: [],
-      outputvol: [],
-      pageNum: 0,
-      pageSize: 7,
-      total: 7,
-      payrow: "",
-      currentPage: 1,
-      options: [
-        {
-          value: 1,
-          label: "兴趣部落"
+        ],
+        category: "1",
+        daylist: {
+          tribe: "0/14", //兴趣部落（日）
+          auth: "0/9", //空间认证（日）
+          daren: "0/12", // 空间达人（日）
+          school: "0/7", //校园达人（日）
+          yy: "0/11", //yy直播（日）
+          cc: "0/9", //cc直播（日）
+          comment: "0/10" //部落评论（日）
         },
-        {
-          value: 2,
-          label: "空间认证"
-        },
-        {
-          value: 3,
-          label: "空间达人"
-        },
-        {
-          value: 4,
-          label: "校园达人"
-        },
-        {
-          value: 5,
-          label: "yy直播"
-        },
-        {
-          value: 6,
-          label: "cc直播"
-        },
-        {
-          value: 7,
-          label: "部落评论"
+        totallist: {
+          tribe_total: "0", //兴趣部落（总）
+          auth_total: "0", //空间认证（总）
+          daren_total: "0", // 空间达人（总）
+          school_total: "0", //校园达人（总）
+          yy_total: "0", //yy直播（总）
+          cc_total: "0", //cc直播（总）
+          comment_total: "0" //部落评论（总）
         }
-      ],
-      category: "1",
-      daylist: {
-        tribe: "0/14", //兴趣部落（日）
-        auth: "0/9", //空间认证（日）
-        daren: "0/12", // 空间达人（日）
-        school: "0/7", //校园达人（日）
-        yy: "0/11", //yy直播（日）
-        cc: "0/9", //cc直播（日）
-        comment: "0/10" //部落评论（日）
+      };
+    },
+    mounted() {
+      this.getstudentlist();
+    },
+    methods: {
+      handleClickinfo(row) {
+        var params = {
+          times: row.time,
+          type: 1,
+          category: this.form.category
+        };
+        this.axios
+          .get("/public/index.php/flowDetail", { params: params })
+          .then(res => {
+            this.gridData = res.data.list;
+            this.dialogTableVisible = true;
+          })
+          .catch(err => {
+            console.error(err);
+          });
       },
-      totallist: {
-        tribe_total: "0", //兴趣部落（总）
-        auth_total: "0", //空间认证（总）
-        daren_total: "0", // 空间达人（总）
-        school_total: "0", //校园达人（总）
-        yy_total: "0", //yy直播（总）
-        cc_total: "0", //cc直播（总）
-        comment_total: "0" //部落评论（总）
+      onSubmit() {
+        this.category = this.form.category;
+        this.getstudentlist();
+      },
+      resetSearch() {
+        this.form.category = 1;
+        this.category = this.form.category;
+        this.getstudentlist();
+        this.form.month = "";
+      },
+
+      add0(m) {
+        return m < 10 ? "0" + m : m;
+      },
+      format(shijianchuo) {
+        var shijianchuo = shijianchuo * 1000;
+        //shijianchuo是整数，否则要parseInt转换
+        var time = new Date(shijianchuo);
+
+        var y = time.getFullYear();
+        var m = time.getMonth() + 1;
+        var d = time.getDate();
+        var h = time.getHours();
+        var mm = time.getMinutes();
+        var s = time.getSeconds();
+        return (
+          y +
+          "-" +
+          this.add0(m) +
+          "-" +
+          this.add0(d) +
+          " " +
+          this.add0(h) +
+          ":" +
+          this.add0(mm) +
+          ":" +
+          this.add0(s)
+        );
+      },
+      handleCurrentChange(val) {
+        this.currentPage = val;
+        this.getstudentlist();
+      },
+
+      getstudentlist() {
+        var params = {
+          page: this.currentPage,
+          category: this.category
+        };
+        this.axios
+          .get("/public/index.php/statiFlowDay", { params: params })
+          .then(res => {
+            this.tableData = res.data.list;
+            console.log(this.tableData);
+            this.total = res.data.totalPage;
+            this.daylist = res.data;
+            this.totallist = res.data;
+          })
+          .catch(err => {
+            console.error(err);
+          });
       }
-    };
-  },
-  mounted() {
-    this.getstudentlist();
-  },
-  methods: {
-    handleClickinfo(row) {
-      var params = {
-        times: row.time,
-        type: 1
-      };
-      this.axios
-        .get("/public/index.php/flowDetail", { params: params })
-        .then(res => {
-          this.gridData = res.data.list;
-          this.dialogTableVisible = true;
-        })
-        .catch(err => {
-          console.error(err);
-        });
-    },
-    onSubmit() {
-      this.category = this.form.category;
-      this.getstudentlist();
-    },
-    resetSearch() {
-      this.form.category = 1;
-      this.category = this.form.category;
-      this.getstudentlist();
-      this.form.month = "";
-    },
-
-    add0(m) {
-      return m < 10 ? "0" + m : m;
-    },
-    format(shijianchuo) {
-      var shijianchuo = shijianchuo * 1000;
-      //shijianchuo是整数，否则要parseInt转换
-      var time = new Date(shijianchuo);
-
-      var y = time.getFullYear();
-      var m = time.getMonth() + 1;
-      var d = time.getDate();
-      var h = time.getHours();
-      var mm = time.getMinutes();
-      var s = time.getSeconds();
-      return (
-        y +
-        "-" +
-        this.add0(m) +
-        "-" +
-        this.add0(d) +
-        " " +
-        this.add0(h) +
-        ":" +
-        this.add0(mm) +
-        ":" +
-        this.add0(s)
-      );
-    },
-    handleCurrentChange(val) {
-      this.currentPage = val;
-      this.getstudentlist();
-    },
-
-    getstudentlist() {
-      var params = {
-        page: this.currentPage,
-        category: this.category
-      };
-      this.axios
-        .get("/public/index.php/statiFlowDay", { params: params })
-        .then(res => {
-          this.tableData = res.data.list;
-          console.log(this.tableData);
-          this.total = res.data.totalPage;
-          this.daylist = res.data;
-          this.totallist = res.data;
-        })
-        .catch(err => {
-          console.error(err);
-        });
     }
-  }
-};
+  };
 </script>
 <style lang="">
-.titile {
-  font-size: 14px;
-  color: #928282;
-}
+  .titile {
+    font-size: 14px;
+    color: #928282;
+  }
 
-.nums {
-  color: #e89c4b;
-  font-size: 18px;
-  line-height: 25px;
-  margin: 0;
-  font-weight: 600;
-}
+  .nums {
+    color: #e89c4b;
+    font-size: 18px;
+    line-height: 25px;
+    margin: 0;
+    font-weight: 600;
+  }
 
-.listflow li {
-  float: left;
-  margin: 0 9px;
-  text-align: center;
-}
+  .listflow li {
+    float: left;
+    margin: 0 9px;
+    text-align: center;
+  }
 </style>

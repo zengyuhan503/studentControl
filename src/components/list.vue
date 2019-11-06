@@ -34,25 +34,26 @@
         payrow: "",
         currentPage: 1,
         dialogTableVisible: false,
-        channelId: ""
+        channelId: "",
+        timechanne: ""
       };
     },
     mounted() {
       this.channelId = this.$route.query.id;
+      this.timechanne = this.$route.query.times;
       this.getstudentlist();
     },
     methods: {
       handleinfo(row) {
         var id = row.number;
         var params = {
-          id: id
+          id: id,
+          times: this.timechanne
         };
         this.$router.push({
           path: "/list",
           // name: 'mallList',
-          query: {
-            id: "id"
-          }
+          query: params
         });
       },
       onSubmit() { },
@@ -99,7 +100,8 @@
         var params = {
           page: this.currentPage,
           limit: this.pageSize,
-          channel: this.channelId
+          channel: this.channelId,
+          times: this.timechanne
         };
         this.axios
           .get("/public/index.php/getChannel", { params: params })
