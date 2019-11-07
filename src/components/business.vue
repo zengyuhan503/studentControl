@@ -96,7 +96,7 @@
           <el-table-column prop="remark" label="备注"> </el-table-column>
           <el-table-column fixed="right" label="操作" width="300">
             <template slot-scope="scope">
-              <!-- <el-button @click="editDialogVisible4=true" type="primary" size="small">查看渠道</el-button> -->
+              <el-button @click="editDialogVisible4=true" type="primary" size="small">查看渠道</el-button>
               <el-button @click="handleedit(scope.row)" type="primary" size="small">编辑</el-button>
               <el-button @click="handdelete(scope.row)" type="primary" size="small">删除</el-button>
             </template>
@@ -125,7 +125,7 @@
           <el-table-column prop="remark" label="备注"> </el-table-column>
           <el-table-column fixed="right" label="操作" width="300">
             <template slot-scope="scope">
-              <!-- <el-button @click="editDialogVisible4=true" type="primary" size="small">查看渠道</el-button> -->
+              <el-button @click="editDialogVisible4=true" type="primary" size="small">查看渠道</el-button>
               <el-button @click="handleedit(scope.row)" type="primary" size="small">编辑</el-button>
               <el-button @click="handdelete(scope.row)" type="primary" size="small">删除</el-button>
             </template>
@@ -153,7 +153,7 @@
           <el-table-column prop="remark" label="备注"> </el-table-column>
           <el-table-column fixed="right" label="操作" width="300">
             <template slot-scope="scope">
-              <!-- <el-button @click="editDialogVisible4=true" type="primary" size="small">查看渠道</el-button> -->
+              <el-button @click="editDialogVisible4=true" type="primary" size="small">查看渠道</el-button>
               <el-button @click="handleedit(scope.row)" type="primary" size="small">编辑</el-button>
               <el-button @click="handdelete(scope.row)" type="primary" size="small">删除</el-button>
             </template>
@@ -182,7 +182,7 @@
           <el-table-column prop="remark" label="备注"> </el-table-column>
           <el-table-column fixed="right" label="操作" width="300">
             <template slot-scope="scope">
-              <!-- <el-button @click="editDialogVisible4=true" type="primary" size="small">查看渠道</el-button> -->
+              <el-button @click="editDialogVisible4=true" type="primary" size="small">查看渠道</el-button>
               <el-button @click="handleedit(scope.row)" type="primary" size="small">编辑</el-button>
               <el-button @click="handdelete(scope.row)" type="primary" size="small">删除</el-button>
             </template>
@@ -212,7 +212,7 @@
         </el-table-column>
         <el-table-column fixed="right" label="操作" width="300">
           <template slot-scope="scope">
-            <!-- <el-button @click="editDialogVisible3=true" type="primary" size="small">查看渠道</el-button> -->
+            <el-button @click="editDialogVisible3=true" type="primary" size="small">查看渠道</el-button>
             <el-button @click="handleedit(scope.row)" type="primary" size="small">编辑</el-button>
             <el-button @click="handdelete(scope.row)" type="primary" size="small">删除</el-button>
           </template>
@@ -358,24 +358,25 @@
     <el-dialog title="渠道信息" :visible.sync="editDialogVisible3" width="30%">
       <el-table ref="multipleTable" class="tablist" max-height="700" @current-change="handleSelectionChange"
         :data="changlist" style="width: 100%">
+        <el-table-column prop="yesbusin" label="渠道名称">
+        </el-table-column>
         <el-table-column prop="totalbusin" label="已评论总数/重">
         </el-table-column>
         <el-table-column prop="todaybusin" label="今日已评论数/重"> </el-table-column>
         <el-table-column prop="yesbusin" label="昨日已评论数/重">
         </el-table-column>
-        <el-table-column prop="yesbusin" label="来自渠道">
-        </el-table-column>
+
       </el-table>
     </el-dialog>
     <el-dialog title="渠道信息" :visible.sync="editDialogVisible4" width="30%">
       <el-table ref="multipleTable" class="tablist" max-height="700" @current-change="handleSelectionChange"
         :data="tableData" style="width: 100%">
+        <el-table-column prop="yesbusin" label="渠道名称">
+        </el-table-column>
         <el-table-column prop="totalbusin" label="已关注总数/重">
         </el-table-column>
         <el-table-column prop="todaybusin" label="今日已关注数/重"> </el-table-column>
         <el-table-column prop="yesbusin" label="昨日已关注数/重">
-        </el-table-column>
-        <el-table-column prop="yesbusin" label="来自渠道">
         </el-table-column>
       </el-table>
     </el-dialog>
@@ -561,7 +562,6 @@
             this.editDialogVisible2 = false;
             this.editDialogVisible = false;
             this.getstudentlist();
-            // this.form = {};
             console.log(res);
           })
           .catch(err => {
