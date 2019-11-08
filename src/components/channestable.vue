@@ -265,8 +265,8 @@
         <!-- <el-table-column prop="magnitude" label="权重"> </el-table-column>
         <el-table-column prop="contact" label="评论内容"> </el-table-column>
         <el-table-column prop="weights" label="量级"> </el-table-column> -->
-        <el-table-column prop="totalbusin" label="今日评论数（评论）"> </el-table-column>
-        <el-table-column prop="todayrepeatbusin" label="今重评论数（评论）"></el-table-column>
+        <el-table-column prop="totalbusin" label="已评论总数"> </el-table-column>
+        <el-table-column prop="todayrepeatbusin" label="已重评论数"></el-table-column>
         <el-table-column prop="status" label="状态"></el-table-column>
         <el-table-column prop="remark" label="备注"></el-table-column>
         <el-table-column fixed="right" label="操作">
